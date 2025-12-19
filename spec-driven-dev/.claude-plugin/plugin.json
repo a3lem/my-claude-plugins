@@ -1,0 +1,8 @@
+{
+  "name": "spec-driven-dev",
+  "version": "0.0.1",
+  "description": "Spec-driven development system with structured directories for requirements, design, tasks, and notes",
+  "author": {
+    "name": "a3lem"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "my-claude-plugins",
+  "owner": {
+    "name": "Adriaan",
+    "email": "a3lem@pm.me"
+  },
+  "metadata": {"description": "Personal collection of Claude Code plugins"},
+  "plugins": [
+    {
+      "name": "spec-driven-dev",
+      "source": "./spec-driven-dev",
+      "description": "Spec-driven development with structured directories, borrowing ideas from Kiro and Spec-kit"
+    }
+  ]
+}
