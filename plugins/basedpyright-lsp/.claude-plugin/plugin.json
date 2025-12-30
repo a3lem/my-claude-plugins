@@ -1,0 +1,8 @@
+{
+  "name": "basedpyright-lsp",
+  "version": "0.1.0",
+  "description": "Enable basedpyright LSP server for Python",
+  "author": {
+    "name": "a3lem"
+  }
+}

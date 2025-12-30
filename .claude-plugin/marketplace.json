@@ -9,8 +9,13 @@
   "plugins": [
     {
       "name": "spec-driven-dev",
-      "source": "./spec-driven-dev",
+      "source": "./plugins/spec-driven-dev",
       "description": "Spec-driven development with structured directories, borrowing ideas from Kiro and Spec-kit"
+    },
+    {
+      "name": "basedpyright-lsp",
+      "source": "./plugins/basedpyright-lsp",
+      "description": "Enable basedpyright LSP server for Python"
     }
   ]
 }
