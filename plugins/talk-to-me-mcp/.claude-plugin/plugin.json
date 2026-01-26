@@ -1,0 +1,8 @@
+{
+  "name": "talk-to-me-mcp",
+  "version": "0.1.0",
+  "description": "MCP server enabling Claude to speak to users via TTS when input is needed",
+  "author": {
+    "name": "a3lem"
+  }
+}

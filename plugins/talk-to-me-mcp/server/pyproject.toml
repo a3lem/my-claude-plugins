@@ -1,0 +1,19 @@
+[project]
+name = "talk-to-me-mcp"
+version = "0.1.0"
+description = "MCP server enabling Claude to speak to users via TTS when input is needed"
+requires-python = ">=3.12"
+dependencies = [
+    "fastmcp>=2.0.0",
+    "loguru",
+    "pocket-tts",
+    "scipy",
+    "uvicorn",
+]
+
+[project.scripts]
+talk-to-me-server = "talk_to_me_mcp:main"
+
+[build-system]
+requires = ["uv_build>=0.7.0"]
+build-backend = "uv_build"
