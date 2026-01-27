@@ -16,11 +16,6 @@
       "name": "basedpyright-lsp",
       "source": "./plugins/basedpyright-lsp",
       "description": "Enable basedpyright LSP server for Python"
-    },
-    {
-      "name": "talk-to-me-mcp",
-      "source": "./plugins/talk-to-me-mcp",
-      "description": "MCP server enabling Claude to speak to users via TTS when input is needed"
     }
   ]
 }
