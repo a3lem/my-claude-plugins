@@ -16,6 +16,16 @@
       "name": "basedpyright-lsp",
       "source": "./plugins/basedpyright-lsp",
       "description": "Enable basedpyright LSP server for Python"
+    },
+    {
+      "name": "python-dev",
+      "source": "./plugins/python-dev",
+      "description": "Python development guidelines for project management and code style"
+    },
+    {
+      "name": "theo-calvin-testing",
+      "source": "./plugins/theo-calvin-testing",
+      "description": "Differential testing with tc - input.json to output.json, diffed against expected.json"
     }
   ]
 }

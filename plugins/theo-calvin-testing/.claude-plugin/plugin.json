@@ -1,0 +1,8 @@
+{
+  "name": "theo-calvin-testing",
+  "version": "1.0.0",
+  "description": "Theodore Calvin's testing framework - language-agnostic, JSON-based test runner",
+  "author": {
+    "name": "a3lem"
+  }
+}
