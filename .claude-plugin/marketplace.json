@@ -18,8 +18,8 @@
       "description": "Enable basedpyright LSP server for Python"
     },
     {
-      "name": "python-dev",
-      "source": "./plugins/python-dev",
+      "name": "python-developer",
+      "source": "./plugins/python-developer",
       "description": "Python development guidelines for project management and code style"
     },
     {
