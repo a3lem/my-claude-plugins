@@ -1,9 +1,11 @@
 {
-  "basedpyright": {
-    "command": "uvx -q --from basedpyright basedpyright-langserver",
+  "python": {
+    "command": "basedpyright-langserver",
     "args": ["--stdio"],
     "extensionToLanguage": {
-      ".py": "python"
-    }
+      ".py": "python",
+      ".pyi": "python"
+    },
+    "maxRestarts": 3
   }
 }
