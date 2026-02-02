@@ -1,5 +1,5 @@
 ---
-name: python-development
+name: python-developer
 description: Use when using, writing, reviewing, or refactoring Python code.
 ---
 # Python
