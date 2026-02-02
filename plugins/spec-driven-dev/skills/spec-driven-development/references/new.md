@@ -2,18 +2,47 @@
 
 How to create a new spec (directory or compact file). This is the first step before gathering requirements.
 
+## Monorepo Support
+
+In monorepos, `specs/` folders may be placed at any level to keep them close to the project they relate to:
+
+```
+monorepo/
+├── packages/
+│   ├── frontend/
+│   │   └── specs/           # Frontend-specific specs
+│   └── backend/
+│       └── specs/           # Backend-specific specs
+├── apps/
+│   └── web/
+│       └── specs/           # Web app specs
+└── specs/                   # Cross-cutting or repo-wide specs
+```
+
+**Determining specs location:**
+1. If user provides a path, use that
+2. If working in a subdirectory that has `specs/`, use that
+3. If multiple `specs/` exist, ask user which to use
+4. Default to repo root `specs/`
+
+Use Glob to discover existing specs locations: `**/specs/`
+
 ## Process
 
-### 1. Determine Next Spec Number
+### 1. Determine Specs Location & Next Number
 
-Run the helper script to find the next available spec number:
-
+**For root-level specs:**
 ```bash
 sh scripts/next-spec-number.sh
 ```
 
+**For nested specs (monorepo):**
+```bash
+sh scripts/next-spec-number.sh packages/frontend/specs
+```
+
 This outputs a zero-padded number (e.g., `001`, `002`, `014`). The script:
-- Creates `specs/` if it doesn't exist
+- Creates the specs directory if it doesn't exist
 - Finds the highest existing `NNN-*` directory or `NNN-*.md` file
 - Returns the next number
 
@@ -93,4 +122,13 @@ User: /new fix login button
 3. Assess: Single requirement, obvious fix → compact format
 4. Gather requirements, then create: specs/004-fix-login-button.md
 5. Use templates/compact.md
+```
+
+**Monorepo (nested specs):**
+```
+User: /new (working in packages/frontend/)
+
+1. Check for existing specs: Glob **/specs/ → packages/frontend/specs/
+2. Run: sh scripts/next-spec-number.sh packages/frontend/specs → "002"
+3. Continue as above, creating in packages/frontend/specs/
 ```

@@ -1,5 +1,8 @@
 ---
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, AskUserQuestion
+allowed-prompts:
+  - tool: Read
+    prompt: read files
 argument-hint: "[spec number]"
 ---
 
@@ -8,5 +11,7 @@ Execute a spec. Use the spec-driven-development skill to:
 2. Work through tasks, updating progress
 3. Verify completion against acceptance criteria
 4. Capture learnings in notes/summary.md (or Notes section for compact specs)
+
+**Monorepo support:** In monorepos, specs/ folders may exist at any level. Use Glob to find the spec across the codebase.
 
 $ARGUMENTS

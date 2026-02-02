@@ -59,6 +59,18 @@ Spec files include `status` field in frontmatter: `active`, `stale`, `archived`,
 
 Specs are numbered sequentially starting at 001. When user says "spec 3", look for `specs/003-*/` (directory) or `specs/003-*.md` (compact).
 
+### Monorepo Support
+
+In monorepos, `specs/` folders may be placed at any level to keep them close to the project they relate to:
+
+```
+packages/frontend/specs/     # Frontend-specific specs
+packages/backend/specs/      # Backend-specific specs
+specs/                       # Cross-cutting specs
+```
+
+Use Glob (`**/specs/`) to discover spec locations. When multiple exist, prefer the one closest to the current working context, or ask the user. See `references/new.md` for details.
+
 ## Compact Spec Format
 
 For small, focused work, use a single-file spec instead of a directory:

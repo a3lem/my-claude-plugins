@@ -3,6 +3,9 @@ name: spec-critic
 description: Adversarial reviewer that challenges specifications and implementation. Acts as senior engineer stand-in. Engages in multi-turn dialogue until satisfied.
 model: sonnet
 allowed-tools: Read, Glob, Grep
+allowed-prompts:
+  - tool: Read
+    prompt: read files
 skills: spec-driven-development
 ---
 
@@ -108,8 +111,8 @@ Grep for similar patterns, read relevant files
 For **inter-spec** mode, find other specs:
 
 ```
-# Find all active specs
-Glob: specs/*/requirements.md, specs/*.md
+# Find all active specs (including in monorepos)
+Glob: **/specs/*/requirements.md, **/specs/*.md
 # Check status in frontmatter, ignore non-active
 ```
 

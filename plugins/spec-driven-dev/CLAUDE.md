@@ -43,6 +43,8 @@ specs/NNN-slug.md     # Single file with requirements + tasks
 
 Use compact for 1-2 requirements, single session, obvious implementation.
 
+**Monorepo support:** `specs/` folders may be placed at any level (e.g., `packages/frontend/specs/`). Use Glob to discover existing locations.
+
 ## Key Conventions
 
 | Convention | Details |
