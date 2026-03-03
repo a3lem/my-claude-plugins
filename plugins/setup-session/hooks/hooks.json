@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'IMPORTANT: At the start of the session, before answering for the first time, execute all steps in (optional) `# Session Setup` section of CLAUDE.md'"
+          }
+        ]
+      }
+    ]
+  }
+}

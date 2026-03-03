@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "my-claude-plugins",
+  "name": "a3lem's-claude-plugins",
   "owner": {
     "name": "Adriaan",
     "email": "a3lem@pm.me"
@@ -18,14 +18,24 @@
       "description": "Enable basedpyright LSP server for Python"
     },
     {
-      "name": "python-developer",
-      "source": "./plugins/python-developer",
+      "name": "python-dev",
+      "source": "./plugins/python-dev",
       "description": "Python development guidelines for project management and code style"
     },
     {
       "name": "theo-calvin-testing",
       "source": "./plugins/theo-calvin-testing",
       "description": "Differential testing with tc - input.json to output.json, diffed against expected.json"
+    },
+    {
+      "name": "beans",
+      "source": "./plugins/beans",
+      "description": "Integration with beans, the agentic-first issue tracker for coding agents"
+    },
+    {
+      "name": "setup-session",
+      "source": "./plugins/setup-session",
+      "description": "Automatically prompt execution of Session Setup steps from CLAUDE.md on session start"
     }
   ]
 }

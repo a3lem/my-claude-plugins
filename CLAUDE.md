@@ -2,6 +2,10 @@
 
 This is a Claude Code plugin marketplace.
 
+## Session Setup
+
+- Load /plugin-dev:skill-development
+
 ## References
 
 - Example marketplace: `~/.claude/plugins/marketplaces/claude-plugins-official/`
