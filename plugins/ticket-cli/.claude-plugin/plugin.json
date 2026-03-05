@@ -1,0 +1,9 @@
+{
+  "name": "ticket-cli",
+  "version": "0.1.0",
+  "description": "Integration for the tk CLI ticket system - git-backed issue tracking for AI agents",
+  "author": {
+    "name": "Adriaan",
+    "email": "a3lem@pm.me"
+  }
+}
