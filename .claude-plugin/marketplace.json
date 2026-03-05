@@ -28,13 +28,8 @@
       "description": "Differential testing with tc - input.json to output.json, diffed against expected.json"
     },
     {
-      "name": "beans",
-      "source": "./plugins/beans",
-      "description": "Integration with beans, the agentic-first issue tracker for coding agents"
-    },
-    {
-      "name": "setup-session",
-      "source": "./plugins/setup-session",
+      "name": "session-setup",
+      "source": "./plugins/session-setup",
       "description": "Automatically prompt execution of Session Setup steps from CLAUDE.md on session start"
     }
   ]
