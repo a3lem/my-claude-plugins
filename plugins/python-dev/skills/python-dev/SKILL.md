@@ -1,5 +1,5 @@
 ---
-name: python-developer
+name: python-dev
 description: Use when using, writing, reviewing, or refactoring Python code.
 ---
 # Python
@@ -15,8 +15,8 @@ Use **uvx** for running Python-based tooling (e.g., linters, formatters, type ch
 
 ## Tooling
 
-When developing or testing, read @TOOLING.md
+When developing or testing, read TOOLING.md
 
 ## Coding Style
 
-When writing or reviewing code, follow @STYLE.md.
+When writing or reviewing code, follow STYLE.md.
