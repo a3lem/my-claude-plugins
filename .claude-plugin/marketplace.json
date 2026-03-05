@@ -31,6 +31,11 @@
       "name": "session-setup",
       "source": "./plugins/session-setup",
       "description": "Automatically prompt execution of Session Setup steps from CLAUDE.md on session start"
+    },
+    {
+      "name": "ticket-cli",
+      "source": "./plugins/ticket-cli",
+      "description": "Integration for the tk CLI ticket system - git-backed issue tracking for AI agents"
     }
   ]
 }
