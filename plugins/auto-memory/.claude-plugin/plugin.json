@@ -1,0 +1,4 @@
+{
+  "name": "auto-memory",
+  "description": "Persistent auto-memory across sessions with configurable storage location"
+}
