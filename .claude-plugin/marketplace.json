@@ -18,9 +18,9 @@
       "description": "Enable basedpyright LSP server for Python"
     },
     {
-      "name": "python-dev",
-      "source": "./plugins/python-dev",
-      "description": "Python development guidelines for project management and code style"
+      "name": "python-prefs",
+      "source": "./plugins/python-prefs",
+      "description": "Python coding preferences and conventions -- how I like to write Python"
     },
     {
       "name": "theo-calvin-testing",
@@ -51,6 +51,11 @@
       "name": "better-comments",
       "source": "./plugins/better-comments",
       "description": "Structured [AI] comment blocks with provenance, context, intent, and assumptions for meaningful code review"
+    },
+    {
+      "name": "project-notes",
+      "source": "./plugins/project-notes",
+      "description": "Project knowledge management with notes, decision logs, and timestamped journal entries"
     }
   ]
 }
