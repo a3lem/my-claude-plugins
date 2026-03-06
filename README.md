@@ -12,4 +12,4 @@ Personal collection of Claude Code plugins, published as a marketplace.
 - **[ticket-cli](plugins/ticket-cli)** - Integration for [`tk`](https://github.com/wedow/ticket), a git-backed issue tracker for AI agents.
 - **[auto-memory](plugins/auto-memory)** - Clone of Claude's built-in auto-memory, but stores memories in the project directory instead of `~/.claude/`.
 - **[frontmatter](plugins/frontmatter)** - Use frontmatter in code files to track human review and set (soft) access controls for AI.
-- **[better-comments](plugins/better-comments)** - Comment blocks that state their AI origin and focus on context, intent, and assumptions — the "why", not the "what".
+- **[better-comments](plugins/better-comments)** - Comment blocks that state their AI origin and focus on context, intent, and assumptions -- the "why", not the "what".
