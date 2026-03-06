@@ -1,3 +1,4 @@
 {
-  "name": "session-session"
+  "name": "session-setup",
+  "description": "Automatically prompt execution of Session Setup steps from CLAUDE.md on session start"
 }
