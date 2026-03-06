@@ -1,5 +1,5 @@
 ---
-name: ticket-management
+name: task-management
 description: >
   This skill should be used when the user asks to "create a ticket", "add a task",
   "track an issue", "manage dependencies", "show blocked tickets", "list open tickets",
@@ -34,7 +34,7 @@ tk create "Title" [-d "description"] [-t type] [-p priority] [-a assignee]
                    [--parent <id>] [--tags tag1,tag2] [--external-ref gh-123]
 ```
 
-Creates a ticket and prints its ID. The `.tickets/` directory is created automatically on first use.
+Creates a ticket and prints its ID. The `.tickets/` directory is created automatically on first use. Assignee defaults to `git config user.name` if not specified.
 
 ### Status Management
 
@@ -57,7 +57,7 @@ tk edit <id>               # Prints file path (use Read to view/edit)
 ### Listing Tickets
 
 ```bash
-tk ls [--status=X] [-a assignee] [-T type]   # List tickets with optional filters
+tk ls [--status=X] [-a assignee] [-T tags]   # List tickets with optional filters
 tk ready [-a X] [-T X]                         # Open/in-progress with all deps resolved
 tk blocked [-a X] [-T X]                       # Open/in-progress with unresolved deps
 tk closed [--limit=N] [-a X] [-T X]           # Recently closed (default 20)
