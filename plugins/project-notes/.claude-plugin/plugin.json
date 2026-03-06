@@ -1,0 +1,8 @@
+{
+  "name": "project-notes",
+  "version": "1.0.0",
+  "description": "Project knowledge management with notes, decision logs, and timestamped journal entries",
+  "author": {
+    "name": "a3lem"
+  }
+}
