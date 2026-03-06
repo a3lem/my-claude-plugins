@@ -1,0 +1,8 @@
+{
+  "name": "frontmatter",
+  "version": "0.1.0",
+  "description": "Manage AI provenance metadata blocks in source files to track review status, rule references, and access control",
+  "author": {
+    "name": "a3lem"
+  }
+}
