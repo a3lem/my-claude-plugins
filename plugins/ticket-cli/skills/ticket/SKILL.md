@@ -1,5 +1,5 @@
 ---
-name: task-management
+name: ticket
 description: >
   This skill should be used when the user asks to "create a ticket", "add a task",
   "track an issue", "manage dependencies", "show blocked tickets", "list open tickets",
