@@ -36,6 +36,21 @@
       "name": "ticket-cli",
       "source": "./plugins/ticket-cli",
       "description": "Integration for the tk CLI ticket system - git-backed issue tracking for AI agents"
+    },
+    {
+      "name": "auto-memory",
+      "source": "./plugins/auto-memory",
+      "description": "Persistent auto-memory across sessions with configurable storage location"
+    },
+    {
+      "name": "frontmatter",
+      "source": "./plugins/frontmatter",
+      "description": "Manage AI provenance metadata blocks in source files to track review status, rule references, and access control"
+    },
+    {
+      "name": "better-comments",
+      "source": "./plugins/better-comments",
+      "description": "Structured [AI] comment blocks with provenance, context, intent, and assumptions for meaningful code review"
     }
   ]
 }
