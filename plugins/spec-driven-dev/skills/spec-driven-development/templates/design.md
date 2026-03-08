@@ -6,7 +6,7 @@ status: active
 # Design: [Feature Name]
 
 ## Approach
-[High-level implementation strategy]
+[High-level implementation strategy. Builds on the proposal's context and constraints.]
 
 ## Decisions
 | Decision | Rationale |

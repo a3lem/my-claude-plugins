@@ -6,7 +6,7 @@
 #   0 - Success
 #   1 - specs/ directory doesn't exist (creates it and returns 001)
 
-SPECS_DIR="${1:-specs}"
+SPECS_DIR="${1:-specs/changes}"
 
 # Create specs/ if it doesn't exist
 if [ ! -d "$SPECS_DIR" ]; then
