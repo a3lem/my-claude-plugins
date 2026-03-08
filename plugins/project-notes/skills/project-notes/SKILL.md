@@ -48,6 +48,18 @@ When a journal entry proves durable, promote it: extract the lasting content int
 
 A page gains authority by being linked from `INDEX.md`. Unlinked pages are still searchable but are not actively trusted as current.
 
+## What Notes Are (and Aren't)
+
+`notes/` is shared, human-readable project knowledge -- what happened, what was learned, what was decided. It's the place for context that matters to anyone working on the project, human or AI.
+
+Things that look similar but serve different purposes:
+
+- **`specs/`** (if available) has a stronger contract. Gherkin scenarios in specs are verified before shipping; notes carry no such guarantee. If something must be enforced as behavior, it belongs in a spec, not a note.
+- **`.agents/memory/`** (if available) is operational context for AI sessions -- how to work here, what to watch out for. It's AI-private and not meant for human consumption. Notes are shared and human-facing.
+- **`docs/`** is durable reference. Notes may go stale; docs are expected to stay current.
+
+When in doubt: if it's a behavioral contract, use specs. If it's an agent working pattern, use auto-memory. If it's lasting reference, use docs. Everything else -- observations, research, working knowledge -- belongs in notes.
+
 ## Searching Notes
 
 ```
