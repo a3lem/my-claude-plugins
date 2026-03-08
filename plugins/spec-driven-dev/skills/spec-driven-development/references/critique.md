@@ -6,46 +6,45 @@ Detailed checklists and exploration patterns for the spec-critic agent.
 
 Checks for contradictions and coherence within a single spec.
 
-### Requirements Checklist
+### Specification Checklist
 
 | Check | What to Look For |
 |-------|-----------------|
-| EARS syntax | Every acceptance criterion uses WHEN/IF/WHILE/WHERE + SHALL |
+| Gherkin syntax | Every scenario uses Given/When/Then structure |
 | No ambiguity | Avoid: should, could, might, usually, quickly, properly |
-| Testability | Each criterion is specific and verifiable |
-| Completeness | Every FR-NNN has acceptance criteria |
-| Edge cases | Error conditions and boundaries documented |
-| Internal consistency | FR-001 doesn't contradict FR-003 |
+| Testability | Each scenario is specific and verifiable |
+| Completeness | Happy path and error cases covered |
+| Edge cases | Boundary conditions documented |
+| Internal consistency | Scenarios don't contradict each other |
 | Terminology | Same concept uses same term throughout |
+| ADDED/MODIFIED/REMOVED | Delta spec sections are accurate (for change specs) |
+
+### Proposal Checklist
+
+| Check | What to Look For |
+|-------|-----------------|
+| Motivation | Clear problem statement, not just "we want X" |
+| Context | Current state described accurately |
+| Scope | Out-of-scope items listed to prevent creep |
+| Constraints | Technical/business limitations documented |
 
 ### Design Checklist
 
 | Check | What to Look For |
 |-------|-----------------|
-| Coverage | All requirements are addressed |
+| Coverage | All scenarios are addressed |
 | Rationale | Decisions have documented reasoning |
-| Alignment | Decisions don't contradict requirements |
+| Alignment | Decisions don't contradict spec scenarios |
 | Risks | Potential issues identified with mitigations |
 | Feasibility | Proposed approach is technically sound |
-
-### Tasks Checklist
-
-| Check | What to Look For |
-|-------|-----------------|
-| Traceability | Every task references requirement(s) it satisfies |
-| Coverage | All requirements appear in at least one task |
-| Sequencing | Dependencies are respected (can't use X before creating X) |
-| Completeness | Verification item exists at end |
-| [NEXT] marker | Present if tasks are incomplete |
 
 ### Cross-File Checklist
 
 | Check | What to Look For |
 |-------|-----------------|
-| Scope alignment | requirements → design → tasks tell consistent story |
-| No drift | Tasks don't add features not in requirements |
-| Terminology | "user" vs "customer" used consistently |
-| References | No orphaned refs (task mentions FR-005 that doesn't exist) |
+| Scope alignment | proposal → spec → design tell consistent story |
+| No drift | Design doesn't add features not in spec |
+| Terminology | Consistent across all files |
 
 ---
 
@@ -64,7 +63,7 @@ Glob: **/.claude/settings.json
 
 **Verify files exist:**
 ```
-# Extract paths from tasks.md
+# Extract paths from design.md
 # For each path: Glob to verify existence
 ```
 
@@ -78,7 +77,7 @@ Grep: "def {function_name}" or "class {class_name}"
 **Understand conventions:**
 ```
 # Find similar code in codebase
-Grep: pattern from tasks
+Grep: pattern from design
 # Compare style, naming, structure
 ```
 
@@ -104,7 +103,7 @@ Grep: pattern from tasks
 
 ### Red Flags
 
-- Tasks reference files that don't exist
+- Design references files that don't exist
 - Design assumes behavior that code doesn't have
 - Plan ignores existing implementation of same feature
 - Proposed changes conflict with CLAUDE.md rules
@@ -119,11 +118,14 @@ Checks for conflicts between this spec and other active specs.
 ### Finding Other Specs
 
 ```
-# Directory format specs
-Glob: specs/*/requirements.md
+# Reference specs
+Glob: specs/reference/*.md
 
-# Compact format specs
-Glob: specs/*.md
+# Change specs (directory format)
+Glob: specs/changes/*/spec.md
+
+# Change specs (compact format)
+Glob: specs/changes/*.md
 
 # Filter by status (check frontmatter)
 # Only consider: status: active
@@ -134,7 +136,7 @@ Glob: specs/*.md
 
 | Conflict | Example |
 |----------|---------|
-| **Contradictory requirements** | Spec A: "[system] SHALL use REST" / Spec B: "[system] SHALL use GraphQL" |
+| **Contradictory scenarios** | Spec A: "Then system uses REST" / Spec B: "Then system uses GraphQL" |
 | **Shared component collision** | Both specs modify same file differently |
 | **Terminology divergence** | Spec A calls it "user", Spec B calls it "customer" |
 | **Sequencing conflict** | Spec A depends on X, Spec B removes X |
@@ -144,9 +146,9 @@ Glob: specs/*.md
 
 1. List all active specs
 2. For each active spec:
-   - Read its requirements.md
+   - Read its spec.md
    - Check for overlapping scope
-   - If overlap: read design.md and tasks.md
+   - If overlap: read design.md
    - Identify specific conflicts
 3. Report conflicts with references to both specs
 
@@ -154,7 +156,6 @@ Glob: specs/*.md
 
 | Issue | Severity |
 |-------|----------|
-| Same requirement number (FR-001 in two specs) | Blocking (namespace collision) |
 | Contradictory modifications to same file | Blocking |
 | Different approaches to same problem | Needs-work (may be intentional) |
 | Terminology inconsistency | Reservation |
@@ -193,7 +194,7 @@ When main agent responds to critique:
 
 Escalate to user after round 5 if:
 - Main agent refuses to address blocking issue
-- Fundamental disagreement about requirements
+- Fundamental disagreement about scenarios
 - Need user input on ambiguous trade-off
 - Scope question that only user can answer
 
@@ -204,7 +205,7 @@ Escalate to user after round 5 if:
 ```
 Has contradictions in spec?           → blocked
 Has unvalidated critical assumptions? → needs-work
-Missing requirement traceability?     → needs-work
+Missing scenario coverage?            → needs-work
 Minor style/convention issues only?   → approved-with-reservations
 All checks pass?                      → approved
 ```

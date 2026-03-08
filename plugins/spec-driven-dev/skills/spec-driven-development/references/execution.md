@@ -9,13 +9,13 @@ How to execute a planned specification, tracking progress and capturing learning
 Read the spec (directory or compact file):
 
 **For directory format:**
-- `requirements.md` - Success criteria to satisfy
-- `tasks.md` - Implementation plan and progress checklist
+- `proposal.md` - Problem context and motivation
+- `spec.md` - Gherkin scenarios to satisfy
 - `design.md` - Architectural decisions (if exists)
-- `notes/summary.md` - Previous learnings (if exists)
+- `notes/` - Previous learnings (if exists)
 
 **For compact format:**
-- Single `.md` file contains requirements + tasks
+- Single `.md` file contains context + scenarios
 
 ### 2. Determine Code Location
 
@@ -29,22 +29,14 @@ Never write code files (`.js`, `.ts`, `.py`, `.html`, etc.) inside `specs/*/`.
 
 ### 3. Execute
 
-Work through the checklist in `tasks.md`:
-- Follow the plan section and design decisions
-- Mark current item with `[NEXT]`, mark complete with `[x]`
-- Add new items discovered during execution
+Work through the implementation:
+- Follow the design decisions
+- Satisfy each Gherkin scenario from `spec.md`
+- Track progress in notes if the work spans multiple sessions
 
-### 4. Track Progress
+### 4. Capture Learnings (Optional)
 
-Update `tasks.md` checklist continuously:
-- Mark completed items with `[x]`
-- Move `[NEXT]` marker to current item
-- Add blocking issues or new items as they arise
-- Keep items granular
-
-### 5. Capture Learnings (Optional)
-
-Create or update `notes/` when there's new information worth recording. Notes can be created during any phase - the `notes/` directory may already exist from earlier phases (e.g., research during design).
+Create or update `notes/` when there's new information worth recording. Notes can be created during any phase.
 
 **Suggested note files:**
 - `research.md` - Exploration findings, links, citations (any phase)
@@ -54,53 +46,61 @@ Create or update `notes/` when there's new information worth recording. Notes ca
 - Learnings and gotchas discovered during implementation
 - Research findings and explored files index
 - Failed approaches and why they didn't work
-- Experiments and their outcomes
 - Context for future maintainers that isn't obvious from the code
 
 **What does NOT belong in notes:**
-- Summaries of requirements (already in requirements.md)
+- Restatements of proposal context (already in proposal.md)
+- Restatements of scenarios (already in spec.md)
 - Restatements of design decisions (already in design.md)
-- Task completion status (already in tasks.md)
 
-**For compact format:** Use the Notes section at the bottom - leave it empty or minimal if nothing notable.
+**For compact format:** Use the Notes section at the bottom.
 
-Timestamp learnings by date (YYYY-MM-DD) for context.
+### 5. Verify & Complete
 
-### 6. Verify & Complete
-
-When all implementation tasks are done, **verification is required** before claiming completion:
+When implementation is done, **verification is required** before claiming completion:
 
 1. **Run tests** if the project has a test framework
    - Execute relevant test suites
    - If tests fail, fix before proceeding
 
 2. **If no automated tests exist**, use AskUserQuestion to request manual verification:
-   - "Please verify the implementation meets these criteria: [list key acceptance criteria]"
+   - "Please verify the implementation meets these criteria: [list key scenarios]"
    - Wait for user confirmation before marking complete
 
-3. **Walk through each acceptance criterion** from `requirements.md`:
-   - For each FR-NNN and NFR-NNN, confirm it's satisfied
+3. **Walk through each Gherkin scenario** from `spec.md`:
+   - For each scenario, confirm it's satisfied
    - Only document verification in notes if there are notable findings
 
 4. **If verification fails**, surface the choice:
    - Fix implementation?
-   - Adjust requirement? (needs user confirmation)
+   - Adjust spec? (needs user confirmation)
 
 5. **Only after verification passes:**
-   - Mark all items complete in `tasks.md`
    - If there were deviations or learnings, document in `notes/`
    - Mark spec as complete
 
-**Never claim "all requirements met" without evidence of verification.**
+**Never claim "all scenarios satisfied" without evidence of verification.**
+
+### 6. Archive
+
+After the change is verified and merged:
+
+1. **Merge deltas into reference specs**: Update the relevant files in `specs/reference/` to reflect the new behavior. The reference spec should describe how things work now, not how they changed.
+
+2. **Move the change directory**: `specs/changes/NNN-slug/` → `specs/changes/archive/NNN-slug/`
+
+3. **Update frontmatter**: Set `status: archived` in the archived spec files.
+
+Archive keeps the change history browsable without cluttering active specs.
 
 ## Finding Specs
 
 Specs can be directories or single files:
-- Directory: `specs/003-feature-name/`
-- Compact: `specs/003-feature-name.md`
+- Directory: `specs/changes/003-feature-name/`
+- Compact: `specs/changes/003-feature-name.md`
 
-When user says "spec 3", check for both `specs/003-*/` (directory) and `specs/003-*.md` (compact file).
+When user says "spec 3", check for both `specs/changes/003-*/` (directory) and `specs/changes/003-*.md` (compact file).
 
-## Updating Requirements
+## Updating Specs
 
-Only modify `requirements.md` with user confirmation - changes affect scope.
+Only modify `spec.md` with user confirmation — changes affect scope.

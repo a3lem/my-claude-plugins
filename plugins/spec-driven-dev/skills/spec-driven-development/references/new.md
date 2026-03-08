@@ -1,6 +1,6 @@
 # New Spec Reference
 
-How to create a new spec (directory or compact file). This is the first step before gathering requirements.
+How to create a new spec (directory or compact file). This is the first step in the workflow.
 
 ## Monorepo Support
 
@@ -38,7 +38,7 @@ sh scripts/next-spec-number.sh
 
 **For nested specs (monorepo):**
 ```bash
-sh scripts/next-spec-number.sh packages/frontend/specs
+sh scripts/next-spec-number.sh packages/frontend/specs/changes
 ```
 
 This outputs a zero-padded number (e.g., `001`, `002`, `014`). The script:
@@ -55,20 +55,20 @@ If no description was provided with `/new`, use AskUserQuestion:
 ### 3. Choose Format
 
 **Compact format** (single file) when:
-- 1-2 functional requirements
+- 1-2 scenarios
 - No design decisions needed
 - Single session work
 - Clear implementation path
 
 **Directory format** when:
-- 3+ requirements
+- 3+ scenarios
 - Design decisions needed
 - Multi-session work
 - Research/exploration required
 
 If user requests compact explicitly or the feature is clearly simple, use compact. When in doubt, use directory format (can consolidate later).
 
-### 4. Create Spec (Directory or Compact)
+### 4. Create Spec
 
 Slugify the description:
 - Lowercase
@@ -78,27 +78,25 @@ Slugify the description:
 
 **For directory format:**
 ```bash
-mkdir -p specs/NNN-slugified-description
+mkdir -p specs/changes/NNN-slugified-description
 ```
 
 **For compact format:**
 ```bash
-touch specs/NNN-slugified-description.md
+touch specs/changes/NNN-slugified-description.md
 ```
 
-### 5. Do NOT Create Empty Files Yet
+### 5. Start with Proposal
 
-**For directory format:** Do not create markdown files at this point. The skill will:
-1. Gather requirements through conversation
-2. Only then write `requirements.md` with actual content
+**For directory format:** The first artifact is `proposal.md`. Gather context, problem, and motivation before writing scenarios. Use `templates/proposal.md`.
 
-**For compact format:** Create the file only after gathering requirements, using `templates/compact.md`.
+**For compact format:** Create the file only after gathering context, using `templates/compact.md`.
 
-Creating empty templates leads to irrelevant boilerplate. Let the requirements phase produce the first real artifact.
+Do not create spec files yet — let the proposal phase produce the first real artifact.
 
-### 6. Continue to Requirements Phase
+### 6. Continue to Specify Phase
 
-After the spec location exists, proceed to [requirements.md](requirements.md) to gather and document requirements.
+After the proposal exists, proceed to [spec.md](spec.md) to write Gherkin scenarios.
 
 ## Example Flows
 
@@ -108,9 +106,9 @@ User: /new user authentication
 
 1. Run: sh scripts/next-spec-number.sh → "003"
 2. Description: "user authentication"
-3. Assess: Multi-session, multiple requirements → directory format
-4. Create: mkdir -p specs/003-user-authentication
-5. Proceed to requirements gathering
+3. Assess: Multi-session, multiple scenarios → directory format
+4. Create: mkdir -p specs/changes/003-user-authentication
+5. Proceed to proposal gathering
 ```
 
 **Compact format (simple fix):**
@@ -119,8 +117,8 @@ User: /new fix login button
 
 1. Run: sh scripts/next-spec-number.sh → "004"
 2. Description: "fix login button"
-3. Assess: Single requirement, obvious fix → compact format
-4. Gather requirements, then create: specs/004-fix-login-button.md
+3. Assess: Single scenario, obvious fix → compact format
+4. Gather context, then create: specs/changes/004-fix-login-button.md
 5. Use templates/compact.md
 ```
 
@@ -129,6 +127,6 @@ User: /new fix login button
 User: /new (working in packages/frontend/)
 
 1. Check for existing specs: Glob **/specs/ → packages/frontend/specs/
-2. Run: sh scripts/next-spec-number.sh packages/frontend/specs → "002"
-3. Continue as above, creating in packages/frontend/specs/
+2. Run: sh scripts/next-spec-number.sh packages/frontend/specs/changes → "002"
+3. Continue as above, creating in packages/frontend/specs/changes/
 ```

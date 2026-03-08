@@ -20,9 +20,9 @@ Skip for simple features, bug fixes, or obvious implementations.
 
 ### 1. Load Context
 
-Read the spec's `requirements.md` to understand:
-- Problem being solved
-- Success criteria to satisfy
+Read the spec's `proposal.md` and `spec.md` (delta spec) to understand:
+- Problem being solved and motivation
+- Scenarios to satisfy
 - Constraints to respect
 
 If refining, also read existing `design.md`.
@@ -59,4 +59,4 @@ Include when relevant to the feature:
 
 ### 4. Cascade Warning (Refine mode only)
 
-If design changed significantly, warn user that tasks may need updating.
+If design changed significantly, warn user that implementation may need adjusting.
