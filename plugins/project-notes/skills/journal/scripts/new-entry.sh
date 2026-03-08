@@ -32,7 +32,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # --- filename ---
-ts=$(date -u +"%Y%m%d.%H%M")
+ts=$(date -u +"%Y%m%dT%H%MZ")
 filename="${ts}.${origin}.${slug}.md"
 filepath="${JOURNAL_DIR}/${filename}"
 

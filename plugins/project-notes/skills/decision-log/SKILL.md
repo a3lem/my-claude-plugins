@@ -23,7 +23,7 @@ Record decisions concisely in `notes/DECISIONS.md`.
 ## Optional Annotations
 
 - `#tags` or `#key=value` tags, e.g. `#infra`, `#bead=kap-fg3`
-- `[[wikilinks]]` to notes pages
+- `[[wikilinks]]` to related notes
 - `[markdown](links)` to journal entries or other docs
 
 ## Status Changes

@@ -1,9 +1,9 @@
 ---
 name: project-notes
 description: |
-  This skill should be used when creating, updating, or organizing wiki pages and documentation
+  This skill should be used when creating, updating, or organizing pages and documentation
   in the notes/ directory. It covers notes/ conventions, INDEX.md curation, wikilinks, and
-  routing guidance for choosing between wiki pages, journal entries, and decision log entries.
+  routing guidance for choosing between notes pages, journal entries, and decision log entries.
   Triggers on: "write a note", "document this", "create a page about", "add to notes",
   "where should I document this", "what type of note should this be".
 version: 1.0.0
@@ -11,7 +11,7 @@ version: 1.0.0
 
 # Project Notes
 
-All project knowledge lives in `notes/` at the repository root.
+All project knowledge lives in `notes/` at the repository root. For durable reference content, prefer `docs/`.
 
 ## Conventions
 
@@ -27,19 +27,20 @@ Create pages as plain `.md` files under `notes/`. Organize by topic in subdirect
 - `notes/DECISIONS.md` -- decision log (see decision-log skill)
 - `notes/journal/` -- timestamped entries (see journal skill)
 
-Everything else is freeform.
+For durable reference content that will be maintained long-term, prefer `docs/`.
 
 ## Routing: Which Type of Note?
 
 | What you're capturing | Use |
 |---|---|
-| Topical reference that will be updated over time | Wiki page in `notes/` |
 | Timestamped observation, discovery, or insight | Journal entry in `notes/journal/` |
 | Concise record of a decision made | Decision log entry in `notes/DECISIONS.md` |
+| Working notes, scratch pages, topic clusters | Page in `notes/` |
+| Durable reference content | `docs/` |
 
-**Wiki pages** are durable -- they get revised and maintained. **Journal entries** are timestamped snapshots -- they capture a moment. **Decision log entries** are one-liners -- they record what was decided, not the full reasoning.
+**Journal entries** are timestamped snapshots -- they capture a moment. **Decision log entries** are one-liners -- they record what was decided, not the full reasoning. **Notes pages** are working knowledge -- they evolve but may go stale. **`docs/`** is durable reference -- maintained and authoritative.
 
-When a journal entry proves durable, promote it: extract the lasting content into a wiki page and link to it from `INDEX.md`.
+When a journal entry proves durable, promote it: extract the lasting content into `docs/` and link to it from `INDEX.md`.
 
 ## INDEX.md
 
