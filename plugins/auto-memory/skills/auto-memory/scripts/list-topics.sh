@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# 
 # List topic files (everything except MEMORY.md) in the memory directory.
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 mem_dir=$("$SCRIPT_DIR/resolve-memory-dir.sh")

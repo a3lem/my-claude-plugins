@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
 # Print MEMORY.md contents (up to 200 lines) or a placeholder.
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 mem_dir=$("$SCRIPT_DIR/resolve-memory-dir.sh")

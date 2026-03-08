@@ -15,7 +15,7 @@ Persistent memory that carries knowledge across sessions. You save memories as f
 
 ## Memory Directory
 
-**Resolved directory:** !`sh ${CLAUDE_PLUGIN_ROOT}/skills/auto-memory/scripts/resolve-memory-dir.sh`
+**Resolved directory:** !`${CLAUDE_SKILL_DIR}/scripts/resolve-memory-dir.sh`
 
 The directory and any files are created on first write. All Read/Write/Edit paths below use this resolved directory.
 
@@ -23,11 +23,11 @@ The directory and any files are created on first write. All Read/Write/Edit path
 
 **MEMORY.md contents:**
 
-!`sh ${CLAUDE_PLUGIN_ROOT}/skills/auto-memory/scripts/read-memory.sh`
+!`${CLAUDE_SKILL_DIR}/scripts/read-memory.sh`
 
 **Existing topic files:**
 
-!`sh ${CLAUDE_PLUGIN_ROOT}/skills/auto-memory/scripts/list-topics.sh`
+!`${CLAUDE_SKILL_DIR}/scripts/list-topics.sh`
 
 ## Core File: MEMORY.md
 
@@ -80,4 +80,5 @@ At the start of a session or when context would help, read `MEMORY.md` and any r
   patterns.md          # Code conventions, recurring patterns
   debugging.md         # Solutions to past issues
   preferences.md       # User workflow and tool preferences
+  gotchas.md           # Surprising information that tripped you up
 ```

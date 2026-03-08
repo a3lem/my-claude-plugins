@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
 # Resolve the auto-memory directory.
 # 1. $A3LEM_AUTO_MEMORY_DIR if set
 # 2. Walk up from $PWD looking for .agents/memory/
