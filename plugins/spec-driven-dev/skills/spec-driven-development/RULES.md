@@ -7,14 +7,14 @@ These are immutable principles. They apply at all times, in all phases.
 1. **Specifications don't serve code—code serves specifications.**
    The specification is the source of truth. Implementation follows from specs, not the other way around.
 
-2. **Requirements before design, design before implementation.**
+2. **Proposal before specification, specification before implementation.**
    Don't skip phases. Each phase has clear prerequisites and deliverables.
 
 3. **specs/ is sacred—no code files, only specification artifacts.**
-   The `specs/` directory contains only: `requirements.md`, `design.md`, `tasks.md`, and optionally `notes/`. All generated code goes elsewhere.
+   The `specs/` directory contains only: `proposal.md`, `specs/*/spec.md`, `design.md`, and optionally `notes/`. All generated code goes elsewhere.
 
 4. **Verification is mandatory—never claim "done" without evidence.**
-   Run tests, or ask user to verify. Walk through each acceptance criterion.
+   Run tests, or ask user to verify. Walk through each Gherkin scenario.
 
 5. **Iteration is expected; loop back to earlier phases when needed.**
    Specs are living documents. When implementation reveals gaps, refine the spec (with user confirmation for scope changes).
@@ -31,7 +31,7 @@ SDD provides structure for complex work but is overhead for trivial changes.
 
 ### Use SDD When
 
-- **Multi-requirement features** - More than 2-3 acceptance criteria
+- **Multi-scenario features** - More than 2-3 Gherkin scenarios
 - **Cross-cutting changes** - Affects multiple components or systems
 - **Multi-session work** - Too large to complete in one session
 - **Ambiguous scope** - Requirements need clarification before implementation
@@ -54,13 +54,12 @@ For medium-complexity work, consider a **compact spec** (single file) or skip de
 
 | File | Primary Owner | Others May Edit |
 |------|---------------|-----------------|
-| `requirements.md` | Specify phase | With user confirmation only |
+| `proposal.md` | Propose phase | With user confirmation only |
+| `spec.md` | Specify phase | With user confirmation only |
 | `design.md` | Design phase | With user confirmation only |
-| `tasks.md` | Plan/Execute phases | Freely |
-| `notes/summary.md` | All phases | Freely |
-| `notes/*` (other) | All phases | Freely |
+| `notes/*` | All phases | Freely |
 
-**Upstream changes invalidate downstream work.** Changing requirements may invalidate design and tasks. Always warn user.
+**Upstream changes invalidate downstream work.** Changing spec may invalidate design. Always warn user.
 
 ## Lock Mechanism
 
@@ -77,7 +76,7 @@ locked: false
 | `locked: false` | Agent MAY update this file |
 | `locked: true` | Agent MAY NOT update this file |
 
-This supports highly agentic workflows where certain specs are frozen (e.g., approved requirements) while others remain editable. When a file is locked and changes are needed, the agent must request the user unlock it first.
+This supports highly agentic workflows where certain specs are frozen (e.g., approved specs) while others remain editable. When a file is locked and changes are needed, the agent must request the user unlock it first.
 
 ## Status Tracking
 
@@ -107,8 +106,8 @@ superseded-by: 015
 ```
 
 **Status transitions:**
-- `active` → `stale` (when work pauses or requirements change upstream)
-- `active` → `archived` (when feature is complete and shipped)
+- `active` → `stale` (when work pauses or spec changes upstream)
+- `active` → `archived` (when feature is complete and archived)
 - `active` → `superseded` (when replaced by a new spec)
 - `stale` → `active` (after review confirms still valid)
 
@@ -127,11 +126,11 @@ The **spec-critic** agent provides adversarial review to ensure spec quality.
 ### When to Request Critique
 
 **Required (high agency mode):**
-- Before transitioning from planning to execution
+- Before transitioning from specifying to execution
 - Before marking a spec as complete
 
 **Recommended:**
-- After significant changes to requirements or design
+- After significant changes to spec or design
 - When resuming stale specs
 - Before handoff to another person or session
 
@@ -156,7 +155,7 @@ The critic's role is quality assurance, not gatekeeping. It should:
 - **Spec-after-the-fact** - Writing specs to document existing code defeats the purpose
 - **Over-specification** - Specs should guide, not constrain every detail
 - **Stale specs** - Specs that diverge from implementation lose value
-- **Premature tasks** - Don't plan tasks until requirements are clear
+- **Premature design** - Don't design until scenarios are clear
 - **Feature speculation** - No "might need" features; only what's explicitly required
 - **Claiming done without verification** - Never mark complete without running tests or getting user confirmation
 - **Fabricated assumptions** - Never add assumptions that weren't checked with the user
@@ -165,8 +164,8 @@ The critic's role is quality assurance, not gatekeeping. It should:
 ## Benefits of This Approach
 
 - **Session persistence** - Specs survive context boundaries; work can resume days later
-- **Reduced drift** - Requirements and implementation stay aligned
-- **Testable outcomes** - EARS notation produces verifiable success criteria
+- **Reduced drift** - Spec and implementation stay aligned
+- **Testable outcomes** - Gherkin scenarios produce verifiable success criteria
 - **Decision traceability** - Design rationale is captured, not lost
 
 ## Writing Style

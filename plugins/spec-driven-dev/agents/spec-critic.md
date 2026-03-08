@@ -48,9 +48,8 @@ The `spec-driven-development` skill is loaded. Read its reference files before c
 |-----------|------|
 | **Core tenets** (always read first) | [RULES.md](RULES.md) |
 | **Detailed checklists** | [references/critique.md](references/critique.md) |
-| **Requirements guidance** | [references/requirements.md](references/requirements.md) |
+| **Specification guidance** | [references/spec.md](references/spec.md) |
 | **Design guidance** | [references/design.md](references/design.md) |
-| **Tasks guidance** | [references/tasks.md](references/tasks.md) |
 
 **Load RULES.md first** to understand what "correct" looks like before critiquing.
 
@@ -63,32 +62,32 @@ Read [RULES.md](RULES.md) to understand core tenets and anti-patterns. Load addi
 ### 2. Read Spec Files
 
 Detect format (directory vs compact):
-- **Directory**: `{spec_path}/requirements.md`, `design.md`, `tasks.md`, `notes/*`
+- **Directory**: `{spec_path}/proposal.md`, `spec.md`, `design.md`, `notes/*`
 - **Compact**: `{spec_path}` (single .md file)
 
 ### 3. Apply Checklists by Mode
 
 **Intra-spec checklist:**
-- [ ] No contradictory acceptance criteria within requirements
-- [ ] All FR/NFR use proper EARS notation (WHEN/IF/WHILE/WHERE + SHALL)
-- [ ] Design decisions align with requirements (no contradictions)
+- [ ] Proposal has clear motivation and problem statement
+- [ ] All scenarios use proper Gherkin syntax (Given/When/Then)
+- [ ] No contradictory scenarios within spec
+- [ ] Design decisions align with spec scenarios (no contradictions)
 - [ ] Design risks are acknowledged or mitigated
-- [ ] Every task traces to at least one requirement (FR-NNN.N format)
-- [ ] Task sequencing is logical (dependencies respected)
+- [ ] ADDED/MODIFIED/REMOVED sections are accurate (for delta specs)
 - [ ] Terminology is consistent across all files
-- [ ] No scope drift between requirements → design → tasks
+- [ ] No scope drift between proposal → spec → design
 
 **Spec-code checklist:**
-- [ ] Files referenced in tasks actually exist
+- [ ] Files referenced in design actually exist
 - [ ] Functions/classes/modules referenced exist and behave as assumed
 - [ ] Assumptions about existing code are validated (read the code, don't assume)
 - [ ] Implementation follows project conventions (check CLAUDE.md, .claude/rules)
 - [ ] Code style matches existing codebase patterns
 - [ ] No unvalidated assumptions about external behavior
-- [ ] Tests exist or are planned for acceptance criteria
+- [ ] Tests exist or are planned for Gherkin scenarios
 
 **Inter-spec checklist:**
-- [ ] No conflicts with other active specs (use Glob to find `specs/*/requirements.md`)
+- [ ] No conflicts with other active specs (use Glob to find `specs/changes/*/spec.md` and `specs/reference/*.md`)
 - [ ] Shared components: no contradictory modifications planned across specs
 - [ ] Terminology consistent across specs
 - [ ] Ignore `archived`, `stale`, and `superseded` specs (check frontmatter status)
@@ -101,8 +100,8 @@ For **spec-code** mode, actively explore the codebase:
 # Find project rules
 Glob: **/CLAUDE.md, **/.claude/rules/**
 
-# Find files referenced in tasks
-Read the tasks.md, extract file paths, verify they exist
+# Find files referenced in design
+Read the design.md, extract file paths, verify they exist
 
 # Check existing code patterns
 Grep for similar patterns, read relevant files
@@ -111,8 +110,8 @@ Grep for similar patterns, read relevant files
 For **inter-spec** mode, find other specs:
 
 ```
-# Find all active specs (including in monorepos)
-Glob: **/specs/*/requirements.md, **/specs/*.md
+# Find all active specs
+Glob: specs/reference/*.md, specs/changes/*/spec.md, specs/changes/*.md
 # Check status in frontmatter, ignore non-active
 ```
 
@@ -189,9 +188,9 @@ Requesting user decision on how to proceed.
 
 | Issue Type | Typical Severity |
 |------------|------------------|
-| Contradictory requirements | Blocking |
-| Missing requirement coverage in tasks | Blocking |
-| Invalid EARS notation | Needs-work |
+| Contradictory scenarios | Blocking |
+| Missing scenario coverage | Blocking |
+| Invalid Gherkin syntax | Needs-work |
 | Unvalidated assumption about code | Needs-work |
 | Terminology inconsistency | Needs-work |
 | Minor style divergence | Reservation |
