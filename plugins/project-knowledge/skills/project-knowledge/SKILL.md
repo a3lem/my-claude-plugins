@@ -17,7 +17,7 @@ A routing guide for project knowledge. Each store has a different contract stren
 | Store | Location | Contract | Purpose |
 |-------|----------|----------|---------|
 | **Specs (reference)** | `specs/reference/` | Strongest | Source of truth for behavior. Gherkin scenarios. Verified before shipping. |
-| **Specs (changes)** | `specs/changes/` | In-progress | Work underway. Proposals, delta specs, and designs for changes not yet shipped. |
+| **Specs (changes)** | `specs/changes/` | Provisional | Proposed changes not yet shipped. Intent, not truth. |
 | **Docs** | `docs/` | Strong | Durable reference content. Maintained, authoritative, human-reviewed. |
 | **Decisions** | `notes/DECISIONS.md` | Medium | Concise record of what was decided. One-liners with `dcn-xxxx` codes. |
 | **Notes** | `notes/` | Weak | Working knowledge, scratch pages, topic clusters. May go stale. |
