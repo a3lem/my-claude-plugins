@@ -1,0 +1,5 @@
+{
+  "name": "project-knowledge",
+  "version": "1.0.0",
+  "description": "Routes knowledge to the right store: specs, notes, decisions, journal, or docs"
+}

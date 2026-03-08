@@ -56,6 +56,11 @@
       "name": "project-notes",
       "source": "./plugins/project-notes",
       "description": "Project knowledge management with notes, decision logs, and timestamped journal entries"
+    },
+    {
+      "name": "project-knowledge",
+      "source": "./plugins/project-knowledge",
+      "description": "Routes knowledge to the right store: specs, notes, decisions, journal, or docs"
     }
   ]
 }
