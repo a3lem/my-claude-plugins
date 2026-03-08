@@ -1,6 +1,6 @@
 ---
 name: python-prefs
-description: This skill should be used when writing, reviewing, or refactoring Python code in any project. It defines coding preferences and conventions that apply to both AI and human developers. Load this skill whenever Python code is being produced or evaluated.
+description: This skill must always be used when writing, reviewing, or refactoring Python code in any project (unless explicitly stated otherwise). It defines coding preferences and conventions that apply to both AI and human developers.
 ---
 # Python Preferences
 

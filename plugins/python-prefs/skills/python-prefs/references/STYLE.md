@@ -9,6 +9,7 @@
 - Write modern Python (3.12+) using builtin generics (e.g., `list[str]` not `T.List[str]`)
 - Prefer structural typing over nominal typing, i.e. using `T.Protocol`.
   - Never create abstract base classes (abc). This isn't Java!
+  - T.Protocol does NOT need @abstractmethod
 - Place type-checking-only imports inside `if T.TYPE_CHECKING:` blocks
 - Collect type definitions that are common to many modules in a types.py.
 
@@ -31,13 +32,16 @@
   - Critical exceptions SHOULD crash the program
   - Error branches must NOT create fake data to compensate for missing data
   - All errors must be handled.
-- Use assertions (`assert`) to detect programmer errors.
+    - Except AssertionErrors
+- Make aggressive use of `assert` statements to detect programming errors. Fail fast. Silent errors are deadly.
+  - Recommended: `assert <condition>, <reason for failure>`
 - NEVER assume default values with `dict.get()` -- handle the `None` case explicitly
 - Prefer the standard library over adding dependencies
 - Do not make all fields of a class nullable/optional. This introduces headaches later. Prefer being strict.
   - If you must allow None, add a comment to motivate the choice.
 - Avoid `global` and `nonlocal` variables. Keep scope local.
 - Don't overload names with multiple meanings that are context-dependent.
+- Avoid f-strings with zero placeholders.
 
 ## Logging
 
