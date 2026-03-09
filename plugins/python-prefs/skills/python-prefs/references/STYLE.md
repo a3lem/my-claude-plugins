@@ -18,6 +18,7 @@
 - Imports belong at the top of the module
 - AVOID placing imports inside function bodies
 - Exception: imports that risk circular dependencies may be placed locally
+- Appending to `sys.path` is strictly forbidden. Use uv + proper project structure.
 
 ## Style Principles
 
