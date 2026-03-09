@@ -15,19 +15,9 @@ Persistent memory that carries knowledge across sessions. You save memories as f
 
 ## Memory Directory
 
-**Resolved directory:** !`${CLAUDE_SKILL_DIR}/scripts/resolve-memory-dir.sh`
+The memory directory, MEMORY.md contents, and topic file list are provided by the session-start hook. Use those values for all Read/Write/Edit paths below.
 
-The directory and any files are created on first write. All Read/Write/Edit paths below use this resolved directory.
-
-## Current Memory
-
-**MEMORY.md contents:**
-
-!`${CLAUDE_SKILL_DIR}/scripts/read-memory.sh`
-
-**Existing topic files:**
-
-!`${CLAUDE_SKILL_DIR}/scripts/list-topics.sh`
+The directory and any files are created on first write.
 
 ## Core File: MEMORY.md
 
