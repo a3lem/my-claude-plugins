@@ -15,6 +15,7 @@ fi
 help_output=$(tk help 2>&1)
 
 cat <<EOF
+<rule>
 This project uses a CLI for task management: `tk` (ticket). Issues, or 'tickets', are stored within the the project directory. 
 
 Unless instructed otherwise, use `Bash(tk ...)` for managing tasks instead of Task*(...) tool calls.
@@ -24,4 +25,5 @@ Output of `tk --help`:
 \`\`\`
 ${help_output}
 \`\`\`
+</rule>
 EOF
