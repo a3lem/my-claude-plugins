@@ -17,7 +17,8 @@ Inspired by [PEP 723](https://peps.python.org/pep-0723/) inline metadata. The bl
 
 ```
 {CC} /// ai
-{CC} human_reviewed = false
+{CC} human-reviewed = false
+{CC} access = write
 {CC} rules = [".claude/rules/python.md"]  # (Optional. May also be a string.)
 {CC} skills = ["ai-frontmatter"]           # (Optional.)
 {CC} ///
@@ -29,12 +30,12 @@ Where `{CC}` is `#` for Python/Shell/YAML, `//` for JS/TS/Go/Rust/Java/C, etc.
 
 | Field | Type | Required | Default |
 |-------|------|----------|---------|
-| `human_reviewed` | bool | yes | `false` |
+| `human-reviewed` | bool | yes | `false` |
+| `access` | string (`"write"`, `"read"`, `"hidden"`) | no | `"write"` |
 | `rules` | string array | no | omitted |
 | `skills` | string array | no | omitted |
-| `access` | string (`"write"`, `"read"`, `"hidden"`) | no | `"write"` |
 
-- `human_reviewed`: whether a human has read and approved the file contents.
+- `human-reviewed`: whether a human has read and approved the file contents.
 - `rules`: paths to rule files (relative to repo root) that the agent should consult when modifying this file.
 - `skills`: skill names that agents must load (if not already loaded) before working in this file.
 - `access`: controls whether AI agents may read or write the file. `"write"` = full access (read and write), `"read"` = read-only, `"hidden"` = no access. **If the field is absent, assume `"write"`** — this keeps all existing files fully accessible without needing updates.
@@ -45,11 +46,11 @@ The block is inserted **after** any shebang or encoding declaration lines, follo
 
 ## Agent Rules
 
-1. **MUST NOT** set `human_reviewed = true`. Only humans may do this.
-2. **Absence** of a block means the file is unreviewed (`human_reviewed = false`) and fully accessible (`access = "write"`).
-3. When pattern-matching or learning from existing code, **prefer** files with `human_reviewed = true`.
-4. When modifying a file that has `human_reviewed = true`, **reset it to `false`** — your edit invalidates the review.
-5. When creating new files, **stamp them** with `human_reviewed = false`.
+1. **MUST NOT** set `human-reviewed = true`. Only humans may do this.
+2. **Absence** of a block means the file is unreviewed (`human-reviewed = false`) and fully accessible (`access = "write"`).
+3. When pattern-matching or learning from existing code, **prefer** files with `human-reviewed = true`.
+4. When modifying a file that has `human-reviewed = true`, **reset it to `false`** — your edit invalidates the review.
+5. When creating new files, **stamp them** with `human-reviewed = false`.
 6. **MUST NOT** modify or delete a file with `access = "read"`.
 7. **MUST NOT** read, modify, or delete a file with `access = "hidden"`.
 8. **MUST NOT** relax `access` (e.g. change `"read"` → `"write"`). Only humans may do that.
@@ -59,9 +60,9 @@ The block is inserted **after** any shebang or encoding declaration lines, follo
 
 When multiple files show different patterns, trust them in this order:
 
-1. `human_reviewed = true` — highest trust
-2. `human_reviewed = false` with `rules` — guided AI output
-3. `human_reviewed = false` without `rules` — raw AI output
+1. `human-reviewed = true` — highest trust
+2. `human-reviewed = false` with `rules` — guided AI output
+3. `human-reviewed = false` without `rules` — raw AI output
 4. No block at all — unknown provenance. Notify user so that they can update the frontmatter.
 
 ## CLI Usage
