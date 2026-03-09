@@ -13,11 +13,11 @@ A structured workflow where specifications are the source of truth. Implementati
 ## Workflow Overview
 
 ```
-Propose  →  Specify  →  Design  →  Execute  →  Archive  →  (Critique)
-   │           │          │          │           │            │
-   ▼           ▼          ▼          ▼           ▼            ▼
-proposal    spec.md    design    code      merge to      verdict
-            (delta)    (opt)              reference/
+Propose  →  Specify  →  Design  →  Plan  →  Execute  →  Archive  →  (Critique)
+   │           │          │         │         │           │            │
+   ▼           ▼          ▼         ▼         ▼           ▼            ▼
+proposal    spec.md    design   tasks.md    code      merge to      verdict
+            (delta)    (opt)    (opt)                 reference/
 ```
 
 Each phase produces a specification artifact. `notes/` can be created during any phase when there's information worth recording (research, exploration findings, incidental insights, failed approaches).
@@ -33,13 +33,14 @@ SDD is valuable for complex, multi-session, or collaborative work. For trivial c
 **High agency mode**: When the user requests autonomous operation (e.g., "work on this until done", "implement this end-to-end", "full autopilot"), iterate through phases without prompting:
 1. Draft proposal with problem context and motivation
 2. **Invoke spec-critic agent** (`intra-spec` mode) to validate proposal
-3. Write Gherkin scenarios (delta spec)
+3. Write requirements and scenarios (delta spec)
 4. Design the solution (if non-trivial)
 5. **Invoke spec-critic agent** (`intra-spec` + `spec-code` modes) to validate design
-6. Execute, looping back to earlier phases if snags arise
-7. Verify against all Gherkin scenarios
-8. **Invoke spec-critic agent** (`all` modes) before marking complete
-9. Archive: merge deltas into reference specs
+6. Create tasks.md with progress overview (if non-trivial)
+7. Execute, looping back to earlier phases if snags arise
+8. Verify against all requirements and scenarios
+9. **Invoke spec-critic agent** (`all` modes) before marking complete
+10. Archive: merge deltas into reference specs
 
 In high agency mode, only pause for user input when hitting a genuine ambiguity that cannot be resolved through reasoning, or when the critic escalates after 5 rounds.
 
@@ -48,7 +49,7 @@ In high agency mode, only pause for user input when hitting a genuine ambiguity 
 ```
 specs/
 ├── reference/                        # How things work (source of truth)
-│   ├── authentication.md             # Full Gherkin spec
+│   ├── authentication.md             # Full spec
 │   ├── billing.md
 │   └── ...
 └── changes/                          # What's changing
@@ -56,8 +57,9 @@ specs/
     │   └── 001-initial-auth/
     ├── 003-oauth-support/            # Active change
     │   ├── proposal.md               # Why (context, motivation, alternatives)
-    │   ├── spec.md                   # What (ADDED/MODIFIED/REMOVED + Gherkin)
+    │   ├── spec.md                   # What (ADDED/MODIFIED/REMOVED + requirements/scenarios)
     │   ├── design.md                 # How (optional)
+    │   ├── tasks.md                  # Progress overview (optional)
     │   └── notes/                    # Learnings (optional)
     └── 004-fix-login-bug.md          # Compact format (single file)
 ```
@@ -87,32 +89,33 @@ specs/changes/NNN-brief-description.md   # Single file instead of directory
 ```
 
 **Use compact format when:**
-- 1-2 Gherkin scenarios
+- 1-2 requirements or scenarios
 - No design decisions needed
 - Can be completed in one session
 - Clear, obvious implementation
 
 **Use directory format when:**
-- 3+ scenarios
+- 3+ requirements or scenarios
 - Design decisions needed
 - Multi-session work
 - Research or exploration required
 
-Compact specs contain context + scenarios in one file. See `templates/compact.md`.
+Compact specs contain context + requirements/scenarios in one file. See `templates/compact.md`.
 
 ## Command Mapping
 
 | Command | Action |
 |---------|--------|
 | `/new [description]` | **Create** - Create new spec in `specs/changes/` |
-| `/refine [instruction]` | **Refine** - Update proposal, spec, or design |
+| `/refine [instruction]` | **Refine** - Update proposal, spec, design, or tasks.md |
 | `/execute [spec nr]` | **Execute** - Implement the spec |
 | `/archive [spec nr]` | **Archive** - Merge deltas into reference + move to archive |
 
 For `/refine`, determine which file to update based on the instruction:
 - Context/motivation-related → update `proposal.md`
-- Scenario/behavior-related → update `spec.md`
+- Requirement/scenario/behavior-related → update `spec.md`
 - Architecture/design-related → update `design.md`
+- Task breakdown/progress-related → update `tasks.md`
 
 If unclear, use AskUserQuestion to clarify which aspect to refine.
 
@@ -133,19 +136,19 @@ Use `templates/proposal.md`.
 
 **Completion:**
 - In high agency mode: **Invoke spec-critic agent** (`intra-spec` mode) before proceeding
-- In interactive mode: Inform user they can continue with specifying scenarios
+- In interactive mode: Inform user they can continue with specifying requirements and scenarios
 
 ## Phase: Specify
 
-Write Gherkin scenarios describing the change.
+Write requirements and scenarios describing the change.
 
 **MANDATORY: Read [references/spec.md](references/spec.md) before proceeding.**
 
 Use `templates/delta-spec.md` for change specs, `templates/reference-spec.md` for reference specs.
 
 **Completion:**
-- In high agency mode: proceed to design (if needed) or execute
-- In interactive mode: inform user they can continue with design (optional) or execute
+- In high agency mode: proceed to design (if needed) or plan
+- In interactive mode: inform user they can continue with design (optional), plan, or execute
 
 ## Phase: Design Approach
 
@@ -157,7 +160,21 @@ Create or refine architectural decisions.
 
 **Completion:**
 - In high agency mode: **Invoke spec-critic agent** (`intra-spec` + `spec-code` modes) before proceeding
-- In interactive mode: Inform user they can continue with execute
+- In interactive mode: Inform user they can continue with plan or execute
+
+## Phase: Plan
+
+Create a lightweight task breakdown for tracking progress.
+
+**MANDATORY: Read [references/tasks.md](references/tasks.md) before proceeding.**
+
+Use `templates/tasks.md`.
+
+**When to skip:** Compact specs, simple directory specs where the spec itself is sufficient.
+
+**Completion:**
+- In high agency mode: proceed to execute
+- In interactive mode: inform user they can continue with execute
 
 ## Phase: Execute
 
@@ -166,7 +183,8 @@ Implement the specification.
 **MANDATORY: Read [references/execution.md](references/execution.md) before proceeding.**
 
 **Completion:**
-- Verify against all Gherkin scenarios in spec.md
+- Verify against all requirements and scenarios in spec.md
+- Update tasks.md checkboxes as tasks are completed (if tasks.md exists)
 - Create notes only if there are learnings worth capturing
 - In high agency mode: **Invoke spec-critic agent** (`all` modes) before marking spec complete
 
@@ -238,9 +256,10 @@ This skill delegates critique to a specialized agent:
 
 All templates are in `templates/`:
 - `proposal.md` - Problem context, motivation, alternatives (directory format)
-- `delta-spec.md` - ADDED/MODIFIED/REMOVED with Gherkin scenarios (directory format)
-- `reference-spec.md` - Full Gherkin spec for reference/ (reference specs)
+- `delta-spec.md` - ADDED/MODIFIED/REMOVED with requirements and scenarios (directory format)
+- `reference-spec.md` - Full spec for reference/ (reference specs)
 - `design.md` - Design decisions (directory format)
+- `tasks.md` - Progress overview with task checkboxes (directory format)
 - `notes/template.md` - Starting point for note files (any phase)
 - `compact.md` - Single-file spec (compact format)
 
@@ -251,6 +270,7 @@ All templates are in `templates/`:
 | Propose | proposal.md | AskUserQuestion |
 | Specify | spec.md (delta) | AskUserQuestion |
 | Design | design.md | AskUserQuestion |
+| Plan | tasks.md | AskUserQuestion |
 | Execute | code (+ notes/ if needed) | Bash, tests |
 | Archive | updated reference/, archived change | Edit, Bash |
 | Critique | verdict + findings | spec-critic |

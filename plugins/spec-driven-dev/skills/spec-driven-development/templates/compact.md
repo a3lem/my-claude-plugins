@@ -11,7 +11,8 @@ format: compact
 
 ## Scenarios
 
-```gherkin
+The system SHALL [requirement].
+
 Scenario: [descriptive name]
   Given [precondition]
   When [action]
@@ -21,7 +22,6 @@ Scenario: [error case]
   Given [precondition]
   When [invalid action]
   Then [error behavior]
-```
 
 ## Notes
 [Optional: Learnings, gotchas, handoff context]

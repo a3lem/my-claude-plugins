@@ -11,10 +11,10 @@ These are immutable principles. They apply at all times, in all phases.
    Don't skip phases. Each phase has clear prerequisites and deliverables.
 
 3. **specs/ is sacred—no code files, only specification artifacts.**
-   The `specs/` directory contains only: `proposal.md`, `specs/*/spec.md`, `design.md`, and optionally `notes/`. All generated code goes elsewhere.
+   The `specs/` directory contains only: `proposal.md`, `spec.md`, `design.md`, `tasks.md`, and optionally `notes/`. All generated code goes elsewhere.
 
 4. **Verification is mandatory—never claim "done" without evidence.**
-   Run tests, or ask user to verify. Walk through each Gherkin scenario.
+   Run tests, or ask user to verify. Walk through each requirement and scenario.
 
 5. **Iteration is expected; loop back to earlier phases when needed.**
    Specs are living documents. When implementation reveals gaps, refine the spec (with user confirmation for scope changes).
@@ -31,7 +31,7 @@ SDD provides structure for complex work but is overhead for trivial changes.
 
 ### Use SDD When
 
-- **Multi-scenario features** - More than 2-3 Gherkin scenarios
+- **Multi-scenario features** - More than 2-3 requirements or scenarios
 - **Cross-cutting changes** - Affects multiple components or systems
 - **Multi-session work** - Too large to complete in one session
 - **Ambiguous scope** - Requirements need clarification before implementation
@@ -57,6 +57,7 @@ For medium-complexity work, consider a **compact spec** (single file) or skip de
 | `proposal.md` | Propose phase | With user confirmation only |
 | `spec.md` | Specify phase | With user confirmation only |
 | `design.md` | Design phase | With user confirmation only |
+| `tasks.md` | Plan phase | Execute phase (checkboxes only) |
 | `notes/*` | All phases | Freely |
 
 **Upstream changes invalidate downstream work.** Changing spec may invalidate design. Always warn user.
@@ -165,7 +166,7 @@ The critic's role is quality assurance, not gatekeeping. It should:
 
 - **Session persistence** - Specs survive context boundaries; work can resume days later
 - **Reduced drift** - Spec and implementation stay aligned
-- **Testable outcomes** - Gherkin scenarios produce verifiable success criteria
+- **Testable outcomes** - Requirements and scenarios produce verifiable success criteria
 - **Decision traceability** - Design rationale is captured, not lost
 
 ## Writing Style

@@ -10,7 +10,7 @@ Four commands, one unified skill:
 
 ```
 /new [description]     → Create spec (proposal in specs/changes/)
-/refine [instruction]  → Update proposal, spec, or design
+/refine [instruction]  → Update proposal, spec, design, or tasks.md
 /execute [spec nr]     → Implement and verify
 /archive [spec nr]     → Merge deltas into reference + archive
     │
@@ -31,7 +31,7 @@ skills/spec-driven-development/
 **Reference specs** (source of truth):
 ```
 specs/reference/
-├── authentication.md   # Full Gherkin spec
+├── authentication.md   # Full spec
 ├── billing.md
 └── ...
 ```
@@ -40,8 +40,9 @@ specs/reference/
 ```
 specs/changes/NNN-slug/
 ├── proposal.md     # Why (context, motivation, alternatives)
-├── spec.md         # What (ADDED/MODIFIED/REMOVED + Gherkin)
+├── spec.md         # What (ADDED/MODIFIED/REMOVED + requirements/scenarios)
 ├── design.md       # How (optional)
+├── tasks.md        # Progress overview (optional)
 └── notes/          # Learnings (optional)
 ```
 
@@ -61,7 +62,7 @@ specs/changes/archive/NNN-slug/   # Moved after merging into reference
 
 | Convention | Details |
 |------------|---------|
-| **Gherkin scenarios** | Given/When/Then for testable specifications |
+| **Mixed notation** | SHALL statements, Given/When/Then scenarios, plain prose |
 | **Delta specs** | ADDED/MODIFIED/REMOVED sections for changes |
 | **Reference specs** | Full specs in `specs/reference/` (source of truth) |
 | **Status field** | `active`, `stale`, `archived`, `superseded` in frontmatter |
@@ -83,13 +84,15 @@ See `RULES.md > When to Use Spec-Driven Development` for detailed guidance.
 | `SKILL.md` | Phase orchestration, workflow overview, agency modes |
 | `RULES.md` | Core tenets, when-to-use guidance, status/lock mechanisms |
 | `references/new.md` | Spec creation (format selection, numbering) |
-| `references/spec.md` | Specification writing, Gherkin quick reference |
+| `references/spec.md` | Specification writing, notation guide |
 | `references/design.md` | Architectural decisions |
 | `references/execution.md` | Implementation, verification, archive step |
 | `references/critique.md` | Critique checklists for intra-spec, spec-code, inter-spec modes |
+| `references/tasks.md` | Tasks.md guidance (progress overview) |
 | `templates/proposal.md` | Problem context, motivation, alternatives |
-| `templates/delta-spec.md` | ADDED/MODIFIED/REMOVED with Gherkin |
-| `templates/reference-spec.md` | Full Gherkin spec for reference/ |
+| `templates/delta-spec.md` | ADDED/MODIFIED/REMOVED with requirements and scenarios |
+| `templates/reference-spec.md` | Full spec for reference/ |
+| `templates/tasks.md` | Progress overview with task checkboxes |
 | `templates/compact.md` | Single-file spec template |
 | `templates/notes/template.md` | Starting point for note files |
 | `agents/spec-critic.md` | Adversarial reviewer (sonnet) |

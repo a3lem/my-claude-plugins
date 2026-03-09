@@ -9,12 +9,12 @@ status: active
 
 ### [Capability Name]
 
-```gherkin
+The system SHALL [requirement].
+
 Scenario: [descriptive name]
   Given [precondition]
   When [action]
   Then [expected outcome]
-```
 
 ## MODIFIED
 
@@ -22,12 +22,12 @@ Scenario: [descriptive name]
 
 **Was:** [previous behavior]
 
-```gherkin
+The system SHALL [new requirement].
+
 Scenario: [descriptive name]
   Given [precondition]
   When [action]
   Then [new expected outcome]
-```
 
 ## REMOVED
 

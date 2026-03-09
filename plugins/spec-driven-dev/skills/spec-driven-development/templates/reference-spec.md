@@ -13,7 +13,8 @@ status: active
 
 ### [Capability Group]
 
-```gherkin
+The system SHALL [requirement].
+
 Scenario: [descriptive name]
   Given [precondition]
   When [action]
@@ -23,26 +24,22 @@ Scenario: [error case]
   Given [precondition]
   When [invalid action]
   Then [error behavior]
-```
 
 ### [Another Capability Group]
 
-```gherkin
+The system SHALL [requirement].
+
 Scenario: [descriptive name]
   Given [precondition]
   When [action]
   Then [expected outcome]
-```
 
 ## Non-Functional Requirements
 <!-- (optional) Performance, security, reliability constraints -->
 
-```gherkin
-Scenario: [performance requirement]
-  Given [load condition]
-  When [action]
-  Then [performance target]
-```
+The system SHALL [performance/security/reliability requirement].
+
+WHILE [condition], the system SHALL [constraint].
 
 ## Glossary
 <!-- (optional) Define domain-specific terms -->

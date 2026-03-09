@@ -10,7 +10,7 @@ Checks for contradictions and coherence within a single spec.
 
 | Check | What to Look For |
 |-------|-----------------|
-| Gherkin syntax | Every scenario uses Given/When/Then structure |
+| Notation correct | SHALL statements use EARS qualifiers; Given/When/Then structure consistent |
 | No ambiguity | Avoid: should, could, might, usually, quickly, properly |
 | Testability | Each scenario is specific and verifiable |
 | Completeness | Happy path and error cases covered |
@@ -42,8 +42,9 @@ Checks for contradictions and coherence within a single spec.
 
 | Check | What to Look For |
 |-------|-----------------|
-| Scope alignment | proposal → spec → design tell consistent story |
+| Scope alignment | proposal → spec → design → tasks.md tell consistent story |
 | No drift | Design doesn't add features not in spec |
+| Tasks alignment | tasks.md (if present) covers spec scope without additions |
 | Terminology | Consistent across all files |
 
 ---
@@ -205,7 +206,7 @@ Escalate to user after round 5 if:
 ```
 Has contradictions in spec?           → blocked
 Has unvalidated critical assumptions? → needs-work
-Missing scenario coverage?            → needs-work
+Missing requirement/scenario coverage? → needs-work
 Minor style/convention issues only?   → approved-with-reservations
 All checks pass?                      → approved
 ```

@@ -10,7 +10,8 @@ Read the spec (directory or compact file):
 
 **For directory format:**
 - `proposal.md` - Problem context and motivation
-- `spec.md` - Gherkin scenarios to satisfy
+- `spec.md` - Requirements and scenarios to satisfy
+- `tasks.md` - Progress overview (if exists)
 - `design.md` - Architectural decisions (if exists)
 - `notes/` - Previous learnings (if exists)
 
@@ -31,7 +32,8 @@ Never write code files (`.js`, `.ts`, `.py`, `.html`, etc.) inside `specs/*/`.
 
 Work through the implementation:
 - Follow the design decisions
-- Satisfy each Gherkin scenario from `spec.md`
+- Satisfy each requirement and scenario from `spec.md`
+- Update `tasks.md` checkboxes as tasks are completed (if exists)
 - Track progress in notes if the work spans multiple sessions
 
 ### 4. Capture Learnings (Optional)
@@ -67,7 +69,7 @@ When implementation is done, **verification is required** before claiming comple
    - "Please verify the implementation meets these criteria: [list key scenarios]"
    - Wait for user confirmation before marking complete
 
-3. **Walk through each Gherkin scenario** from `spec.md`:
+3. **Walk through each requirement and scenario** from `spec.md`:
    - For each scenario, confirm it's satisfied
    - Only document verification in notes if there are notable findings
 

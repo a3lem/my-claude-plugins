@@ -1,6 +1,6 @@
 # Specification Phase Reference
 
-How to write and refine specifications using Gherkin scenarios.
+How to write and refine specifications using requirements and scenarios.
 
 **Prerequisite:** Spec directory must already exist (see Initialize phase).
 
@@ -8,7 +8,7 @@ How to write and refine specifications using Gherkin scenarios.
 
 Specifications live in two locations:
 
-- **`specs/reference/`** — full Gherkin specs describing how things work (the truth)
+- **`specs/reference/`** — full specs describing how things work (the truth)
 - **`specs/changes/NNN-slug/`** — delta specs describing what a change adds, modifies, or removes
 
 ### Reference Specs
@@ -56,7 +56,7 @@ Read existing spec files if present:
 
 In **Create mode**: Use AskUserQuestion to understand:
 - What behavior changes (added, modified, removed)
-- Acceptance scenarios (Given/When/Then)
+- Acceptance criteria (requirements and scenarios)
 - Known constraints
 
 In **Refine mode**: Apply the user's instruction to existing spec.
@@ -72,11 +72,31 @@ Use `templates/delta-spec.md` for change specs.
 - Delete sections that don't apply (e.g., no REMOVED section if nothing is removed)
 - Delete HTML comments before finalizing
 
-## Gherkin Quick Reference
+## Specification Notation
 
-Gherkin provides structured, testable scenarios using Given/When/Then.
+Specs support three notations. Mix them freely within a single spec.
 
-```gherkin
+### SHALL Statements
+
+Use SHALL for requirements, constraints, and non-functional requirements. Follows EARS (Easy Approach to Requirements Syntax) qualifiers.
+
+| Pattern | Use When |
+|---------|----------|
+| The system SHALL [action] | Unconditional requirement |
+| WHEN [trigger], the system SHALL [action] | Event-driven requirement |
+| IF [condition], the system SHALL [action] | State-dependent requirement |
+| WHILE [state], the system SHALL [action] | Ongoing constraint |
+
+**Examples:**
+- The system SHALL encrypt all data at rest using AES-256.
+- WHEN a user exceeds 5 failed login attempts, the system SHALL lock the account for 15 minutes.
+- IF the database is unreachable, the system SHALL retry 3 times with exponential backoff.
+- WHILE the system is in maintenance mode, the system SHALL return 503 for all API requests.
+
+### Given/When/Then Scenarios
+
+Use Given/When/Then for behavioral specs that map directly to tests.
+
 Scenario: User logs in with valid credentials
   Given a registered user with email "user@example.com"
   When the user submits valid credentials
@@ -88,7 +108,6 @@ Scenario: User logs in with invalid password
   When the user submits an invalid password
   Then the system returns a 401 error
   And no token is issued
-```
 
 | Keyword | Purpose |
 |---------|---------|
@@ -97,6 +116,38 @@ Scenario: User logs in with invalid password
 | **Then** | Outcome — observable result |
 | **And** | Continuation of previous keyword |
 | **But** | Negative continuation (e.g., "But no email is sent") |
+
+### Plain Prose
+
+Use plain prose where formal notation adds no value — overviews, context, migration notes, explanations.
+
+### Choosing Notation
+
+| Content | Recommended Notation |
+|---------|---------------------|
+| Functional requirements | SHALL statements |
+| Constraints and NFRs | SHALL statements |
+| Behavioral acceptance criteria | Given/When/Then scenarios |
+| Test-mappable specifications | Given/When/Then scenarios |
+| Context, overviews, migration notes | Plain prose |
+| Complex multi-step interactions | Given/When/Then scenarios |
+
+A single requirement often benefits from both: a SHALL statement declaring the rule, followed by a scenario demonstrating it.
+
+### Hybrid Example
+
+### Requirement: Session Timeout
+The system SHALL expire sessions after 30 minutes of inactivity.
+
+#### Scenario: Idle timeout
+  Given an authenticated session
+  When 30 minutes pass without activity
+  Then the session is invalidated
+
+#### Scenario: Activity resets timeout
+  Given an authenticated session
+  When the user performs an action at minute 29
+  Then the session timeout resets to 30 minutes
 
 **Guidelines:**
 - Write scenarios in third person, present tense
@@ -120,14 +171,15 @@ Review against this checklist:
 **Clarity:**
 - [ ] Each scenario tests one behavior
 - [ ] Concrete values used (no vague terms)
-- [ ] Given/When/Then structure consistent
+- [ ] SHALL statements use EARS qualifiers correctly
+- [ ] Given/When/Then structure consistent where used
 
 **Consistency:**
-- [ ] Terminology consistent across scenarios
-- [ ] No contradictory scenarios
+- [ ] Terminology consistent across requirements and scenarios
+- [ ] No contradictory requirements or scenarios
 - [ ] ADDED/MODIFIED/REMOVED sections accurate (for delta specs)
 
 **Testability:**
-- [ ] Each scenario is directly verifiable
+- [ ] Each requirement or scenario is directly verifiable
 - [ ] Outcomes are observable
 - [ ] No untestable assertions

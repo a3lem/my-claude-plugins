@@ -96,7 +96,7 @@ Do not create spec files yet — let the proposal phase produce the first real a
 
 ### 6. Continue to Specify Phase
 
-After the proposal exists, proceed to [spec.md](spec.md) to write Gherkin scenarios.
+After the proposal exists, proceed to [spec.md](spec.md) to write requirements and scenarios.
 
 ## Example Flows
 

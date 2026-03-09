@@ -1,6 +1,6 @@
 # Spec-Driven Development Plugin
 
-A Claude Code plugin for structured feature development using Gherkin specifications with reference/changes separation.
+A Claude Code plugin for structured feature development using specifications with reference/changes separation.
 
 ## Overview
 
@@ -26,7 +26,8 @@ spec-driven-dev/
 │       │   ├── spec.md              # Specification phase guide
 │       │   ├── design.md            # Design phase guide
 │       │   ├── execution.md         # Execution + archive guide
-│       │   └── critique.md          # Critique checklists
+│       │   ├── critique.md          # Critique checklists
+│       │   └── tasks.md             # Tasks.md guidance
 │       ├── scripts/
 │       │   └── next-spec-number.sh  # Finds next available spec number
 │       └── templates/
@@ -35,6 +36,7 @@ spec-driven-dev/
 │           ├── reference-spec.md
 │           ├── design.md
 │           ├── compact.md
+│           ├── tasks.md
 │           └── notes/
 │               └── template.md
 ├── agents/
@@ -48,25 +50,25 @@ spec-driven-dev/
 | Command | Description | Example |
 |---------|-------------|---------|
 | `/new` | Create new spec with proposal | `/new user authentication` |
-| `/refine` | Update proposal, spec, or design | `/refine add OAuth support` |
+| `/refine` | Update proposal, spec, design, or tasks | `/refine add OAuth support` |
 | `/execute` | Implement the specification | `/execute 001` |
 | `/archive` | Merge deltas into reference + archive | `/archive 001` |
 
 ### Workflow
 
 ```
-Propose → Specify → Design → Execute → Archive
-   │         │         │        │         │
-   ▼         ▼         ▼        ▼         ▼
-proposal   spec.md   design   code    merge to
-           (delta)   (opt)            reference/
+Propose → Specify → Design → Plan → Execute → Archive
+   │         │         │       │       │         │
+   ▼         ▼         ▼       ▼       ▼         ▼
+proposal   spec.md   design  tasks   code    merge to
+           (delta)   (opt)   (opt)           reference/
 ```
 
 ### Spec Structure
 
 ```
 specs/
-├── reference/                  # Source of truth (full Gherkin specs)
+├── reference/                  # Source of truth (full specs)
 │   ├── authentication.md
 │   └── billing.md
 └── changes/                    # Active and archived changes
@@ -74,8 +76,9 @@ specs/
     │   └── 001-initial-auth/
     └── 003-oauth-support/      # Active change
         ├── proposal.md         # Why (context, motivation)
-        ├── spec.md             # What (ADDED/MODIFIED/REMOVED + Gherkin)
+        ├── spec.md             # What (ADDED/MODIFIED/REMOVED + requirements/scenarios)
         ├── design.md           # How (optional)
+        ├── tasks.md            # Progress overview (optional)
         └── notes/              # Learnings (optional)
 ```
 
@@ -87,7 +90,7 @@ For simple changes, use a single-file spec:
 specs/changes/004-fix-login-bug.md   # Single file instead of directory
 ```
 
-Contains context + Gherkin scenarios in one file. Use for 1-2 scenarios that can be completed in one session.
+Contains context + requirements/scenarios in one file. Use for 1-2 scenarios that can be completed in one session.
 
 ### When to Use vs Skip
 
@@ -100,29 +103,40 @@ See `skills/spec-driven-development/RULES.md` for detailed guidance.
 ### Iteration
 
 - `/new user auth` → creates new spec with proposal
-- `/refine add OAuth support` → updates existing spec (proposal, spec, or design)
+- `/refine add OAuth support` → updates existing spec (proposal, spec, design, or tasks)
 - `/execute 001` → implements the spec
 - `/archive 001` → merges into reference, moves to archive
 
 When upstream changes (spec, design), downstream may need updating.
 
-## Gherkin Scenarios
+## Specification Notation
 
-Specifications use Gherkin syntax for testable scenarios:
+Specs support mixed notation — use whichever fits the content:
 
-```gherkin
+**SHALL statements** for requirements, constraints, and NFRs:
+
+The system SHALL encrypt all data at rest using AES-256.
+WHEN a user exceeds 5 failed login attempts, the system SHALL lock the account for 15 minutes.
+
+**Given/When/Then** for behavioral specs mapping to tests:
+
 Scenario: User logs in with valid credentials
   Given a registered user with email "user@example.com"
   When the user submits valid credentials
   Then the system returns an authentication token
   And the token expires in 24 hours
 
-Scenario: User logs in with invalid password
-  Given a registered user with email "user@example.com"
-  When the user submits an invalid password
-  Then the system returns a 401 error
-  And no token is issued
-```
+**Hybrid** — a SHALL statement declaring the rule, followed by a scenario demonstrating it:
+
+### Requirement: Session Timeout
+The system SHALL expire sessions after 30 minutes of inactivity.
+
+#### Scenario: Idle timeout
+  Given an authenticated session
+  When 30 minutes pass without activity
+  Then the session is invalidated
+
+**Plain prose** where formal notation adds no value.
 
 ## Core Rules
 
@@ -144,6 +158,6 @@ See `skills/spec-driven-development/RULES.md` for the complete ruleset.
 
 1. **Persistence** - Specs survive session boundaries
 2. **Structure** - Consistent format for proposals, specs, design, and tracking
-3. **Clarity** - Gherkin scenarios ensure testable specifications
+3. **Clarity** - Requirements and scenarios ensure testable specifications
 4. **Traceability** - Reference specs evolve; change history is preserved in archive
-5. **Verification** - Never ship without confirming scenarios are satisfied
+5. **Verification** - Never ship without confirming requirements are satisfied

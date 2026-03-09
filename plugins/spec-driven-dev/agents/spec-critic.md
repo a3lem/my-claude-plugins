@@ -62,20 +62,21 @@ Read [RULES.md](RULES.md) to understand core tenets and anti-patterns. Load addi
 ### 2. Read Spec Files
 
 Detect format (directory vs compact):
-- **Directory**: `{spec_path}/proposal.md`, `spec.md`, `design.md`, `notes/*`
+- **Directory**: `{spec_path}/proposal.md`, `spec.md`, `design.md`, `tasks.md`, `notes/*`
 - **Compact**: `{spec_path}` (single .md file)
 
 ### 3. Apply Checklists by Mode
 
 **Intra-spec checklist:**
 - [ ] Proposal has clear motivation and problem statement
-- [ ] All scenarios use proper Gherkin syntax (Given/When/Then)
+- [ ] Notation correct: SHALL statements use EARS qualifiers; Given/When/Then structure consistent
 - [ ] No contradictory scenarios within spec
 - [ ] Design decisions align with spec scenarios (no contradictions)
 - [ ] Design risks are acknowledged or mitigated
 - [ ] ADDED/MODIFIED/REMOVED sections are accurate (for delta specs)
 - [ ] Terminology is consistent across all files
-- [ ] No scope drift between proposal → spec → design
+- [ ] tasks.md (if present) covers spec scope without additions
+- [ ] No scope drift between proposal → spec → design → tasks.md
 
 **Spec-code checklist:**
 - [ ] Files referenced in design actually exist
@@ -84,7 +85,7 @@ Detect format (directory vs compact):
 - [ ] Implementation follows project conventions (check CLAUDE.md, .claude/rules)
 - [ ] Code style matches existing codebase patterns
 - [ ] No unvalidated assumptions about external behavior
-- [ ] Tests exist or are planned for Gherkin scenarios
+- [ ] Tests exist or are planned for requirements and scenarios
 
 **Inter-spec checklist:**
 - [ ] No conflicts with other active specs (use Glob to find `specs/changes/*/spec.md` and `specs/reference/*.md`)
@@ -190,7 +191,7 @@ Requesting user decision on how to proceed.
 |------------|------------------|
 | Contradictory scenarios | Blocking |
 | Missing scenario coverage | Blocking |
-| Invalid Gherkin syntax | Needs-work |
+| Invalid notation (SHALL/Given/When/Then) | Needs-work |
 | Unvalidated assumption about code | Needs-work |
 | Terminology inconsistency | Needs-work |
 | Minor style divergence | Reservation |

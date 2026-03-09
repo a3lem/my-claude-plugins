@@ -8,8 +8,9 @@ argument-hint: "[instruction or spec number]"
 
 Refine an existing spec. Use the spec-driven-development skill to update:
 - proposal.md (context and motivation)
-- spec.md (Gherkin scenarios)
+- spec.md (requirements and scenarios)
 - design.md (design decisions)
+- tasks.md (task breakdown and progress)
 
 Determine which file(s) to update based on the instruction.
 
