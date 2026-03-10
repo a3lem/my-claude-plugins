@@ -18,8 +18,8 @@
       "description": "Enable basedpyright LSP server for Python"
     },
     {
-      "name": "python-prefs",
-      "source": "./plugins/python-prefs",
+      "name": "python-rules",
+      "source": "./plugins/python-rules",
       "description": "Python coding preferences and conventions -- how I like to write Python"
     },
     {

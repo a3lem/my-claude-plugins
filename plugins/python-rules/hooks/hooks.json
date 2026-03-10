@@ -1,0 +1,16 @@
+{
+  "description": "Inject python rules into system prompt on session start",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/inject_python_rules.py",
+            "timeout": 2
+          }
+        ]
+      }
+    ]
+  }
+}
