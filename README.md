@@ -6,7 +6,7 @@ Personal collection of Claude Code plugins, published as a marketplace.
 
 - **[spec-driven-dev](plugins/spec-driven-dev)** - Spec-driven development with Gherkin scenarios, reference/changes separation, and structured archive flow.
 - **[basedpyright-lsp](plugins/basedpyright-lsp)** - Enables the basedpyright LSP server for Python type checking.
-- **[python-prefs](plugins/python-prefs)** - Python coding preferences and conventions.
+- **[python-rules](plugins/python-rules)** - Python rules. Injected via hook.
 - **[theo-calvin-testing](plugins/theo-calvin-testing)** - Differential testing with `tc`: input.json to output.json, diffed against expected.json.
 - **[session-setup](plugins/session-setup)** - Runs Session Setup steps from CLAUDE.md on session start.
 - **[ticket-cli](plugins/ticket-cli)** - Integration for [`tk`](https://github.com/wedow/ticket), a git-backed issue tracker for AI agents.
