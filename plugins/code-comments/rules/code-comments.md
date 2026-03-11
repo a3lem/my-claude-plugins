@@ -1,15 +1,4 @@
----
-name: better-comments
-description: >-
-  This skill should be used when the user asks to "write better comments",
-  "add AI comments", "add provenance comments", "use [AI] markers",
-  "improve code comments", "add context to comments", or when generating
-  or modifying code that warrants meaningful comment blocks.
-  Teaches Claude to write structured, reviewer-facing comment blocks
-  with provenance, context, intent, and assumptions.
----
-
-# Better Comments
+# Code Commenting Style
 
 Write code comments that are meaningful to human reviewers and useful to other AIs.
 Include a brief comment block above each generated function, class, or logically distinct section.
@@ -23,7 +12,7 @@ When modifying code that already has an `[AI]` comment block, update it in place
 | Field | Required | Purpose |
 |-------|----------|---------|
 | Provenance | Yes | `# [AI]` marker on the first line |
-| Context | Yes | Reference the issue/ticket/task ID, task summary, or journal entry that motivated this change |
+| Context | Yes | What motivated this change. Required: brief summary. If applicable, prefix with reference to the issue/ticket/task ID, journal entry, or spec. |
 | Intent | Yes | Why the code was added or modified |
 | Assumptions | If any | So the reviewer can validate them |
 | Logic | Optional | How it works, only if non-obvious from the code itself |
@@ -51,13 +40,7 @@ Docstrings are API-facing: they appear in `help()`, IDEs, and generated docs. Th
 
 ## Inline Logic Comments
 
-Beyond the `[AI]` block, add short inline comments when the reader needs non-local context to understand correctness:
-
-- **Stack/queue mechanics**: what's pushed and popped, what invariant the structure maintains
-- **Index juggling**: when code indexes into multiple structures, clarify which index refers to what
-- **Nullability**: when a value can be None and it's not obvious why it's safe to use here
-- **Non-obvious control flow**: early returns guarded by a condition established elsewhere, or loops with subtle exit conditions
-- **Quiet mutation**: when a variable is reassigned or a structure is mutated in place and a reader scanning linearly might miss it
+Beyond the `[AI]` block, add short inline comments when the reader needs non-local context to understand correctness. **Examples**: Stack/queue mechanics, index juggling, nullability, non-obvious control flow (e.g. breaks), quiet mutation.
 
 ## Adapting to Context
 

@@ -48,8 +48,8 @@
       "description": "Manage AI provenance metadata blocks in source files to track review status, rule references, and access control"
     },
     {
-      "name": "better-comments",
-      "source": "./plugins/better-comments",
+      "name": "code-comments",
+      "source": "./plugins/code-comments",
       "description": "Structured [AI] comment blocks with provenance, context, intent, and assumptions for meaningful code review"
     },
     {
