@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+
+"""Inject markdown rule files into Claude's system prompt via SessionStart hooks.
+
+Usage: inject-rules <file1.md> [file2.md ...]
+
+Outputs a <system-reminder> block to stdout, which Claude Code picks up
+when used as a SessionStart hook command.
+"""
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
+
+def _display_path(file_path: Path) -> str:
+    """Build a short display path like 'references/STYLE.md from plugin python-rules@marketplace'."""
+    plugin_root = os.environ.get("CLAUDE_PLUGIN_ROOT")
+    if not plugin_root:
+        return str(file_path)
+
+    plugin_root_path = Path(plugin_root).resolve()
+    resolved = file_path.resolve()
+
+    # Make path relative to plugin root
+    try:
+        rel = resolved.relative_to(plugin_root_path)
+    except ValueError:
+        return str(file_path)
+
+    # Plugin name from plugin.json
+    plugin_json = plugin_root_path / ".claude-plugin" / "plugin.json"
+    plugin_name = plugin_root_path.name
+    if plugin_json.exists():
+        plugin_name = json.loads(plugin_json.read_text()).get("name", plugin_name)
+
+    # Marketplace name by walking up to find .claude-plugin/marketplace.json
+    marketplace_name = None
+    candidate = plugin_root_path.parent
+    while candidate != candidate.parent:
+        mkt = candidate / ".claude-plugin" / "marketplace.json"
+        if mkt.exists():
+            marketplace_name = json.loads(mkt.read_text()).get("name")
+            break
+        candidate = candidate.parent
+
+    suffix = f" from plugin {plugin_name}"
+    if marketplace_name:
+        suffix += f"@{marketplace_name}"
+    return f"{rel}{suffix}"
+
+
+FILE_TEMPLATE = "Contents of {file_path}:\n{content}"
+
+WRAPPER_TEMPLATE = """\
+<system-reminder>
+# claudeMd (continued)
+{rule_content}
+</system-reminder>\
+"""
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Inject markdown rule files into Claude's system prompt via SessionStart hooks."
+    )
+    parser.add_argument("files", nargs="+", help="Markdown rule files to inject")
+    args = parser.parse_args()
+
+    paths = [Path(f) for f in args.files]
+
+    chunks = []
+    for p in paths:
+        if not p.exists():
+            print(f"File not found: {p}", file=sys.stderr)
+            sys.exit(1)
+        chunks.append(FILE_TEMPLATE.format(file_path=_display_path(p), content=p.read_text().strip()))
+
+    print(WRAPPER_TEMPLATE.format(rule_content="\n\n".join(chunks)))
+
+
+if __name__ == "__main__":
+    main()
