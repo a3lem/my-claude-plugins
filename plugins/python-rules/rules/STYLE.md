@@ -52,7 +52,3 @@
 When working on applications or service code:
 
 - Use **loguru** as the logging library, unless a different logging library is already used.
-
-## Comments
-
-- Always motivate, always say why. Never forget to say why -- why it's needed and why you wrote it the way you did.
