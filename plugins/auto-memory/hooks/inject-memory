@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+
+"""Inject auto-memory rules and MEMORY.md contents into Claude's system prompt.
+
+Usage: inject-memory <template.md>
+
+Resolves the memory directory, substitutes {{MEMORY_DIR}} in the rule template,
+and appends MEMORY.md contents (first 200 lines). Outputs a <system-reminder>
+block to stdout for SessionStart hook consumption.
+"""
+
+import json
+import os
+import sys
+from pathlib import Path
+
+
+def resolve_memory_dir() -> Path:
+    """Resolve the memory directory.
+
+    1. $AUTO_MEMORY_DIR env var if set
+    2. Walk up from $PWD looking for .claude/memory/
+    3. Fall back to $PWD/.claude/memory/
+    """
+    env_dir = os.environ.get("AUTO_MEMORY_DIR")
+    if env_dir:
+        return Path(env_dir)
+
+    cwd = Path.cwd()
+    candidate = cwd
+    while candidate != candidate.parent:
+        mem = candidate / ".claude" / "memory"
+        if mem.is_dir():
+            return mem
+        candidate = candidate.parent
+
+    return cwd / ".claude" / "memory"
+
+
+def _plugin_label() -> str:
+    """Build a label like 'plugin auto-memory@marketplace-name'."""
+    plugin_root = os.environ.get("CLAUDE_PLUGIN_ROOT")
+    if not plugin_root:
+        return ""
+
+    plugin_root_path = Path(plugin_root).resolve()
+
+    plugin_json = plugin_root_path / ".claude-plugin" / "plugin.json"
+    plugin_name = plugin_root_path.name
+    if plugin_json.exists():
+        plugin_name = json.loads(plugin_json.read_text()).get("name", plugin_name)
+
+    marketplace_name = None
+    candidate = plugin_root_path.parent
+    while candidate != candidate.parent:
+        mkt = candidate / ".claude-plugin" / "marketplace.json"
+        if mkt.exists():
+            marketplace_name = json.loads(mkt.read_text()).get("name")
+            break
+        candidate = candidate.parent
+
+    label = f"plugin {plugin_name}"
+    if marketplace_name:
+        label += f"@{marketplace_name}"
+    return label
+
+
+FILE_TEMPLATE = "Contents of {file_path}:\n{content}"
+
+WRAPPER_TEMPLATE = """\
+<system-reminder>
+# claudeMd (continued)
+{rule_content}
+</system-reminder>\
+"""
+
+
+def main() -> None:
+    if len(sys.argv) < 2:
+        print("Usage: inject-memory <template.md>", file=sys.stderr)
+        sys.exit(1)
+
+    template_path = Path(sys.argv[1])
+    if not template_path.exists():
+        print(f"File not found: {template_path}", file=sys.stderr)
+        sys.exit(1)
+
+    memory_dir = resolve_memory_dir()
+    label = _plugin_label()
+
+    chunks = []
+
+    # Render template with {{MEMORY_DIR}} substituted
+    content = template_path.read_text().strip().replace("{{MEMORY_DIR}}", str(memory_dir))
+    display = f"auto-memory.template.md from {label}" if label else str(template_path)
+    chunks.append(FILE_TEMPLATE.format(file_path=display, content=content))
+
+    # Inject MEMORY.md contents if it exists
+    memory_md = memory_dir / "MEMORY.md"
+    if memory_md.exists():
+        lines = memory_md.read_text().splitlines()[:200]
+        chunks.append(FILE_TEMPLATE.format(
+            file_path=str(memory_md),
+            content="\n".join(lines).strip(),
+        ))
+
+    # List topic files
+    if memory_dir.is_dir():
+        topics = sorted(
+            p.name for p in memory_dir.glob("*.md")
+            if p.name != "MEMORY.md"
+        )
+        if topics:
+            listing = "\n".join(f"- {t}" for t in topics)
+            chunks.append(f"Memory topic files:\n{listing}")
+
+    print(WRAPPER_TEMPLATE.format(rule_content="\n\n".join(chunks)))
+
+
+if __name__ == "__main__":
+    main()
