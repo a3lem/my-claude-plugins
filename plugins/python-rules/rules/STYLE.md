@@ -44,11 +44,9 @@
 - Don't overload names with multiple meanings that are context-dependent.
 - Avoid f-strings with zero placeholders.
 
-## Logging
+## Logging & Printing
 
 - Logging statements should show values that are inexpensive to compute
 - Use multiline string literals for multiline outputs, NOT rows of `print()` statements
-
-When working on applications or service code:
-
-- Use **loguru** as the logging library, unless a different logging library is already used.
+- Do not add padding to log message strings
+- When working on applications or service code, use **loguru** as the logging library, unless a different logging library is already used.
