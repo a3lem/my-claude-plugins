@@ -12,6 +12,7 @@
   - T.Protocol does NOT need @abstractmethod
 - Place type-checking-only imports inside `if T.TYPE_CHECKING:` blocks
 - Collect type definitions that are common to many modules in a types.py.
+- Never quote undefined type annotations. Use `from __future__ import annotations` to postpone the evaluation of type hint annotations.
 
 ## Imports
 
