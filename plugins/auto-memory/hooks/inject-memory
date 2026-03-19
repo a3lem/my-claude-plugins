@@ -19,8 +19,8 @@ def resolve_memory_dir() -> Path:
     """Resolve the memory directory.
 
     1. $AUTO_MEMORY_DIR env var if set
-    2. Walk up from $PWD looking for .claude/memory/
-    3. Fall back to $PWD/.claude/memory/
+    2. Walk up from $PWD looking for memory/
+    3. Fall back to $PWD/memory/
     """
     env_dir = os.environ.get("AUTO_MEMORY_DIR")
     if env_dir:
@@ -29,12 +29,12 @@ def resolve_memory_dir() -> Path:
     cwd = Path.cwd()
     candidate = cwd
     while candidate != candidate.parent:
-        mem = candidate / ".claude" / "memory"
+        mem = candidate / ".agents" / "memory"
         if mem.is_dir():
             return mem
         candidate = candidate.parent
 
-    return cwd / ".claude" / "memory"
+    return cwd / ".agents" / "memory"
 
 
 def _plugin_label() -> str:
