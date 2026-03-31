@@ -12,7 +12,7 @@ When modifying code that already has an `[AI]` comment block, update it in place
 | Field | Required | Purpose |
 |-------|----------|---------|
 | Provenance | Yes | `# [AI]` marker on the first line |
-| Context | Yes | What motivated this change. Required: brief summary. If applicable, prefix with reference to the issue/ticket/task ID, journal entry, or spec. |
+| Context | Yes | Brief description of what motivated this change. If applicable, include any external references, e.g. issue/ticket/task ID, spec slugs, note files, etc. |
 | Intent | Yes | Why the code was added or modified |
 | Assumptions | If any | So the reviewer can validate them |
 | Logic | Optional | How it works, only if non-obvious from the code itself |
@@ -24,6 +24,7 @@ When modifying code that already has an `[AI]` comment block, update it in place
 # Context: TASK-42 (add retry logic to GCS uploads)
 # Intent: prevent transient failures from dropping documents
 # Assumes: GCS client raises google.api_core.exceptions.ServiceUnavailable on transient errors
+<code>...
 ```
 
 ## Comments vs Docstrings
@@ -50,6 +51,7 @@ When no issue, ticket, or task ID is available for the Context field, use a brie
 # [AI]
 # Context: user request to add CSV export
 # Intent: stream rows to avoid loading full dataset in memory
+<code>...
 ```
 
 ## Language-Specific Syntax

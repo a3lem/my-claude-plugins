@@ -1,35 +1,30 @@
----
-locked: false
-status: active
----
+# [Capability/Feature Name]
 
-# [Feature/Component Name]
+## Overview / Purpose
 
-## Overview
+[Brief description of what this capability does and its role in the system.]
 
-[Brief description of what this component does and its role in the system.]
+## Requirements
 
-## Scenarios
-
-### [Capability Group]
+### Requirement: [Requirement name]
 
 The system SHALL [requirement].
 
-Scenario: [descriptive name]
-  Given [precondition]
+#### Scenario: [descriptive name]
+  Given [precondition] <!-- optional -->
   When [action]
   Then [expected outcome]
 
-Scenario: [error case]
-  Given [precondition]
+#### Scenario: [error case]
+  Given [precondition] <!-- optional -->
   When [invalid action]
   Then [error behavior]
 
-### [Another Capability Group]
+### Requirement: [Another requirement name]
 
 The system SHALL [requirement].
 
-Scenario: [descriptive name]
+#### Scenario: [descriptive name]
   Given [precondition]
   When [action]
   Then [expected outcome]

@@ -1,20 +1,20 @@
----
-locked: false
-status: active
----
-
-# Tasks: [Spec Title]
-
-## [Phase or Component 1]
+## 1. [Phase/Step 1]
 
 - [ ] [Task description] (TK-NNN)
-- [ ] [Task description]
-- [ ] [Task description]
 
-## [Phase or Component 2]
+### 1.1 [(Sub)step/phase] <!-- Optional -->
 
 - [ ] [Task description]
 - [ ] [Task description]
+
+## 2. [Phase .. 2]
+
+...
+
+## N. Verification
+
+- [ ] Tests for requirement: [requirement-slug]
+- [ ] Tests for requirement: [requirement-slug]
 
 ## Notes
 

@@ -68,9 +68,9 @@ This plugin provides routing guidance. The actual stores are managed by:
 
 | Store | Plugin |
 |-------|--------|
-| `specs/` | **spec-driven-dev** — structured workflow with proposals, Gherkin specs, design, and archive |
-| `notes/`, `notes/journal/`, `notes/DECISIONS.md` | **project-notes** — conventions for notes, journal entries, and decision log |
-| `docs/` | No plugin needed — standard project documentation |
+| `specs/` | **spec-driven-dev** – structured workflow with proposals, Gherkin specs, design, and archive |
+| `notes/`, `notes/journal/`, `notes/DECISIONS.md` | **project-notes** – conventions for notes, journal entries, and decision log |
+| `docs/` | No plugin needed – standard project documentation |
 
 ## Rules
 

@@ -6,7 +6,7 @@ Notes can be created during ANY phase. Name files descriptively:
 - implementation.md - Execution-phase learnings, gotchas
 - [topic].md - Any topic-specific notes
 
-Do NOT duplicate information from proposal.md, spec.md, or design.md.
+Do NOT duplicate information from proposal.md, deltas/*/spec.md, or design.md.
 -->
 
 ## YYYY-MM-DD

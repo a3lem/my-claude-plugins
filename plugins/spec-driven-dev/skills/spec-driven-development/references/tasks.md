@@ -4,12 +4,12 @@ How to create and maintain tasks.md as a lightweight progress overview.
 
 ## Purpose
 
-`tasks.md` is a progress overview — a high-level checklist of what needs doing and what's done. It is not an execution plan or implementation guide.
+`tasks.md` is a progress overview – a high-level checklist of what needs doing and what's done. It is not an execution plan or implementation guide.
 
 ## When to Create
 
 - **Directory specs** with 3+ implementation steps or multi-session work
-- **Skip** for compact specs or simple directory specs where the spec itself is sufficient
+- **Skip** for simple specs where the spec itself is sufficient
 
 Create during the **Plan phase**, after spec and design are complete.
 
@@ -51,9 +51,24 @@ Use a Notes section at the bottom for blockers, dependencies, or context:
 - Database migrations must run before API deployment
 ```
 
+### Verification Section
+
+Every tasks.md should include a Verification section with test-writing tasks. These tasks are what stand between `in progress` and `complete`.
+
+```markdown
+## Verification
+
+- [ ] Tests for requirement: create-change
+- [ ] Tests for requirement: list-active-changes
+- [ ] Tests for requirement: archive-change
+```
+
+One task per requirement. Each task is done when the requirement has at least one annotated test (see [verification.md](verification.md)).
+
 ## What Belongs in tasks.md
 
 - Task groupings by phase or component
+- A Verification section with per-requirement test tasks
 - Checkboxes showing completion status
 - Optional ticket references
 - Blockers and dependencies
@@ -61,14 +76,13 @@ Use a Notes section at the bottom for blockers, dependencies, or context:
 ## What Does NOT Belong
 
 - Detailed implementation steps (those belong in design.md or notes/)
-- FR-traceability markers like `_[FR-001.1]_`
 - `[NEXT]` markers or execution state
 - Restatements of spec scenarios
 
 ## Updating tasks.md
 
 - **Plan phase**: Create the initial task breakdown
-- **Execute phase**: Check off tasks as they are completed (checkboxes only — don't restructure during execution)
+- **Execute phase**: Check off tasks as they are completed (checkboxes only – don't restructure during execution)
 
 ## Relationship to ticket-cli
 

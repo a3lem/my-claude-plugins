@@ -1,276 +1,167 @@
 ---
 name: spec-driven-development
-description: Unified spec-driven development workflow. Use for creating, designing, executing, and critiquing specifications. Triggers on "spec", "create spec", "design spec", "execute spec", "critique spec", "proposal", "archive spec", or spec numbers like "spec 001".
-version: 2.0.0
+description: Spec-driven development workflow. Use for exploring ideas, proposing changes, implementing specs, and archiving completed work. Triggers on "spec", "propose", "explore", "apply", "archive", "critique", or "specification".
+version: 3.2.0
 ---
 
 # Spec-Driven Development
 
-A structured workflow where specifications are the source of truth. Implementation follows from specs, not the other way around.
+For terminology and concepts, see [docs/concepts.md](../../docs/concepts.md).
 
-**Always read [RULES.md](RULES.md) first** - it contains immutable principles that apply at all times.
+## `spectl` CLI
 
-## Workflow Overview
+How to run: `python3 scripts/spectl.py`.
 
-```
-Propose  →  Specify  →  Design  →  Plan  →  Execute  →  Archive  →  (Critique)
-   │           │          │         │         │           │            │
-   ▼           ▼          ▼         ▼         ▼           ▼            ▼
-proposal    spec.md    design   tasks.md    code      merge to      verdict
-            (delta)    (opt)    (opt)                 reference/
-```
+## How This Works
 
-Each phase produces a specification artifact. `notes/` can be created during any phase when there's information worth recording (research, exploration findings, incidental insights, failed approaches).
+Specs describe the system's behavior as a contract: what the system does (requirements) and how it behaves (scenarios). They live in `specs/reference/`, organized by capability. That's the source of truth.
 
-## When to Use This Workflow
+When something needs to change, you create a **change** -- a folder under `specs/changes/` with artifacts that capture the intent, the behavioral modifications, and optionally the technical approach and implementation plan.
 
-SDD is valuable for complex, multi-session, or collaborative work. For trivial changes (single-line fixes, routine refactors, obvious implementations), skip SDD and implement directly. See **RULES.md > When to Use Spec-Driven Development** for detailed guidance.
+The **proposal** (`proposal.md`) is always the entry point. It answers *why* this change exists and names the capabilities affected. From there, artifacts can develop in the order that makes sense:
 
-## Agency Modes
+- **Spec Deltas** (`deltas/*/spec.md`) -- behavioral changes per capability (ADDED/MODIFIED/REMOVED/RENAMED requirements)
+- **Design** (`design.md`) -- technical approach, when the how isn't obvious
+- **Tasks** (`tasks.md`) -- implementation checklist, when the work has multiple steps
 
-**Interactive mode** (default): Use AskUserQuestion at each phase to gather input and confirm decisions.
+These artifacts aren't just a planning exercise. They make the change reviewable without reading code: the proposal explains why, the deltas show what's changing in the system's behavioral contract, and the design captures architectural decisions.
 
-**High agency mode**: When the user requests autonomous operation (e.g., "work on this until done", "implement this end-to-end", "full autopilot"), iterate through phases without prompting:
-1. Draft proposal with problem context and motivation
-2. **Invoke spec-critic agent** (`intra-spec` mode) to validate proposal
-3. Write requirements and scenarios (delta spec)
-4. Design the solution (if non-trivial)
-5. **Invoke spec-critic agent** (`intra-spec` + `spec-code` modes) to validate design
-6. Create tasks.md with progress overview (if non-trivial)
-7. Execute, looping back to earlier phases if snags arise
-8. Verify against all requirements and scenarios
-9. **Invoke spec-critic agent** (`all` modes) before marking complete
-10. Archive: merge deltas into reference specs
+When implementation is complete and verified, the change is **archived**: deltas merge into the reference specs, the change moves to `changes/archive/`, and the reference reflects the new reality.
 
-In high agency mode, only pause for user input when hitting a genuine ambiguity that cannot be resolved through reasoning, or when the critic escalates after 5 rounds.
+### When to Use SDD
 
-## Spec Directory Structure
+**Use it for:** any code changes that reflect changed requirements or behavioral expectations.
+
+**Skip it for:** simple bugfixes, routine refactors, dependency bumps, doc-only changes, exploratory spikes.
+
+### File Ownership
+
+| File | Owner | Others May Edit |
+|------|-------|-----------------|
+| `proposal.md` | Propose phase | With user confirmation |
+| `deltas/*/spec.md` | Propose phase | With user confirmation |
+| `design.md` | Propose phase | With user confirmation |
+| `tasks.md` | Propose phase | Apply phase (checkboxes only) |
+| `notes/*` | Any phase | Freely |
+
+**Changing a spec may invalidate the design.** Always warn the user.
+
+## Rules
+
+1. **Specs are the source of truth.** Code serves specs. Never write specs to describe existing code -- that's backwards.
+2. **`specs/` is for specs only.** No code files. `deltas/` contains only `spec.md` files. All code goes elsewhere.
+3. **Don't fabricate.** Only document what was discussed or confirmed. No invented assumptions, no invented constraints. If unsure, ask.
+4. **Prove your work.** Never claim "done" without passing tests or user verification. Walk through each requirement and scenario.
+5. **Mark unknowns with `[CLARIFICATION NEEDED]`** and resolve them before proceeding.
+
+**Don't:**
+- Over-specify (specs guide, they don't pin down every detail)
+- Design before scenarios are clear
+- Add "might need" features -- only what's explicitly required
+- Let specs go stale -- a spec that doesn't match the code is worse than no spec
+
+## Commands
+
+Each command maps to a phase. **Only read the reference doc for your current phase.**
+
+| Command | What it does | Reference |
+|---------|-------------|-----------|
+| `/explore [topic]` | Investigate before committing to a proposal | [references/explore.md](references/explore.md) |
+| `/propose [description]` | Create a change and its artifacts | [references/propose.md](references/propose.md) |
+| `/refine [instruction]` | Update an existing artifact | Route to artifact reference below |
+| `/apply [slug]` | Implement and verify a change | [references/apply.md](references/apply.md) |
+| `/archive [slug]` | Merge deltas into reference, archive the change | [references/archive.md](references/archive.md) |
+
+### Artifact References
+
+When writing or refining an artifact, read its reference and use its template:
+
+| Artifact | Reference | Template |
+|----------|-----------|----------|
+| `proposal.md` | [references/propose.md](references/propose.md) | `templates/proposal.md` |
+| `deltas/*/spec.md` | [references/spec.md](references/spec.md) | `templates/spec-delta.md` |
+| `design.md` | [references/design.md](references/design.md) | `templates/design.md` |
+| `tasks.md` | [references/tasks.md](references/tasks.md) | `templates/tasks.md` |
+
+### Refine Routing
+
+`/refine` determines which artifact to update from the instruction:
+
+- Context, motivation, scope → `proposal.md`
+- Requirements, scenarios, behavior → relevant `spec.md` in `deltas/`
+- Architecture, technical decisions → `design.md`
+- Task breakdown, progress → `tasks.md`
+
+If unclear, ask the user.
+
+## Directory Structure
 
 ```
 specs/
-├── reference/                        # How things work (source of truth)
-│   ├── authentication.md             # Full spec
-│   ├── billing.md
-│   └── ...
-└── changes/                          # What's changing
-    ├── archive/                      # Completed changes (for history)
-    │   └── 001-initial-auth/
-    ├── 003-oauth-support/            # Active change
-    │   ├── proposal.md               # Why (context, motivation, alternatives)
-    │   ├── spec.md                   # What (ADDED/MODIFIED/REMOVED + requirements/scenarios)
-    │   ├── design.md                 # How (optional)
-    │   ├── tasks.md                  # Progress overview (optional)
-    │   └── notes/                    # Learnings (optional)
-    └── 004-fix-login-bug.md          # Compact format (single file)
+├── reference/                        # Source of truth
+│   ├── authentication/
+│   │   └── spec.md
+│   └── billing/
+│       └── spec.md
+└── changes/
+    ├── archive/                      # Completed changes
+    │   └── 2026-03-01-initial-auth/
+    └── add-oauth/                    # Active change
+        ├── proposal.md               # Why (intent, scope, capabilities)
+        ├── deltas/                   # What (per-capability behavioral changes)
+        │   ├── session-management/
+        │   │   └── spec.md
+        │   └── user-auth/
+        │       └── spec.md
+        ├── design.md                 # How (optional)
+        ├── tasks.md                  # Steps (optional)
+        └── notes/                    # Learnings (optional)
 ```
 
-Spec files include `status` field in frontmatter: `active`, `stale`, `archived`, or `superseded`. See RULES.md for details.
+A delta at `deltas/user-auth/spec.md` targets `reference/user-auth/spec.md`. Changes are identified by slug -- look for matching slugs in `specs/changes/*/`.
 
-Specs are numbered sequentially starting at 001. When user says "spec 3", look for `specs/changes/003-*/` (directory) or `specs/changes/003-*.md` (compact).
+**Monorepo:** Each sub-project has its own `specs/` directory. `spectl` discovers them with `-r` (recursive). Use `--dir` to target a specific one.
 
-### Monorepo Support
+## Interactive vs Autonomous
 
-In monorepos, `specs/` folders may be placed at any level to keep them close to the project they relate to:
+**Interactive** (default): Ask the user at each phase for input and confirmation (use AskUserQuestion tool).
 
-```
-packages/frontend/specs/     # Frontend-specific specs
-packages/backend/specs/      # Backend-specific specs
-specs/                       # Cross-cutting specs
-```
+**Autonomous** (when user requests it, e.g. "work on this until done"):
 
-Use Glob (`**/specs/`) to discover spec locations. When multiple exist, prefer the one closest to the current working context, or ask the user. See `references/new.md` for details.
+1. **Propose:** Draft all artifacts. Invoke **spec-critic** (`intra-spec` after proposal, `intra-spec` + `spec-code` after specs + design).
+2. **Apply:** Implement and verify against all requirements and scenarios. Invoke **spec-critic** (`all`) before marking complete.
+3. **Archive:** Invoke **spec-sync** → validate with **spec-critic** (`inter-spec`) → move to archive.
 
-## Compact Spec Format
-
-For small, focused work, use a single-file spec instead of a directory:
-
-```
-specs/changes/NNN-brief-description.md   # Single file instead of directory
-```
-
-**Use compact format when:**
-- 1-2 requirements or scenarios
-- No design decisions needed
-- Can be completed in one session
-- Clear, obvious implementation
-
-**Use directory format when:**
-- 3+ requirements or scenarios
-- Design decisions needed
-- Multi-session work
-- Research or exploration required
-
-Compact specs contain context + requirements/scenarios in one file. See `templates/compact.md`.
-
-## Command Mapping
-
-| Command | Action |
-|---------|--------|
-| `/new [description]` | **Create** - Create new spec in `specs/changes/` |
-| `/refine [instruction]` | **Refine** - Update proposal, spec, design, or tasks.md |
-| `/execute [spec nr]` | **Execute** - Implement the spec |
-| `/archive [spec nr]` | **Archive** - Merge deltas into reference + move to archive |
-
-For `/refine`, determine which file to update based on the instruction:
-- Context/motivation-related → update `proposal.md`
-- Requirement/scenario/behavior-related → update `spec.md`
-- Architecture/design-related → update `design.md`
-- Task breakdown/progress-related → update `tasks.md`
-
-If unclear, use AskUserQuestion to clarify which aspect to refine.
-
-## Phase: Initialize Spec
-
-**REQUIRED reading:**
-- [references/new.md](references/new.md) - Creating the spec directory
-
-If spec already created, move on to next phase!
-
-## Phase: Propose
-
-Draft the proposal — problem context, motivation, alternatives considered.
-
-**MANDATORY: Read [references/new.md](references/new.md) before proceeding.**
-
-Use `templates/proposal.md`.
-
-**Completion:**
-- In high agency mode: **Invoke spec-critic agent** (`intra-spec` mode) before proceeding
-- In interactive mode: Inform user they can continue with specifying requirements and scenarios
-
-## Phase: Specify
-
-Write requirements and scenarios describing the change.
-
-**MANDATORY: Read [references/spec.md](references/spec.md) before proceeding.**
-
-Use `templates/delta-spec.md` for change specs, `templates/reference-spec.md` for reference specs.
-
-**Completion:**
-- In high agency mode: proceed to design (if needed) or plan
-- In interactive mode: inform user they can continue with design (optional), plan, or execute
-
-## Phase: Design Approach
-
-Create or refine architectural decisions.
-
-**MANDATORY: Read [references/design.md](references/design.md) before proceeding.**
-
-**When to skip:** Simple features, bug fixes, obvious implementations.
-
-**Completion:**
-- In high agency mode: **Invoke spec-critic agent** (`intra-spec` + `spec-code` modes) before proceeding
-- In interactive mode: Inform user they can continue with plan or execute
-
-## Phase: Plan
-
-Create a lightweight task breakdown for tracking progress.
-
-**MANDATORY: Read [references/tasks.md](references/tasks.md) before proceeding.**
-
-Use `templates/tasks.md`.
-
-**When to skip:** Compact specs, simple directory specs where the spec itself is sufficient.
-
-**Completion:**
-- In high agency mode: proceed to execute
-- In interactive mode: inform user they can continue with execute
-
-## Phase: Execute
-
-Implement the specification.
-
-**MANDATORY: Read [references/execution.md](references/execution.md) before proceeding.**
-
-**Completion:**
-- Verify against all requirements and scenarios in spec.md
-- Update tasks.md checkboxes as tasks are completed (if tasks.md exists)
-- Create notes only if there are learnings worth capturing
-- In high agency mode: **Invoke spec-critic agent** (`all` modes) before marking spec complete
-
-## Phase: Archive
-
-After the change is verified and merged, archive it.
-
-**Process:**
-1. Merge delta spec scenarios into the relevant `specs/reference/` files
-2. Move `specs/changes/NNN-slug/` → `specs/changes/archive/NNN-slug/`
-3. Set `status: archived` in the moved spec files
-
-Reference specs should describe how things work *now*, not how they changed. The archived change directory preserves the history.
-
-## Phase: Critique
-
-On-demand adversarial review. Delegate to **spec-critic** agent.
-
-The critic acts as a senior engineer stand-in, challenging assumptions and demanding proof. It engages in multi-turn dialogue until satisfied (max 5 rounds).
-
-**Critique modes:**
-- `intra-spec` - Coherence within the spec (no contradictions between spec files)
-- `spec-code` - Alignment with codebase (assumptions validated, conventions followed)
-- `inter-spec` - Consistency across specs (no conflicts with other active specs)
-- `all` - Run all three modes
-
-**Verdict levels:**
-- `approved` - No issues, may proceed
-- `approved-with-reservations` - Minor issues, may proceed
-- `needs-work` - Significant issues, must address
-- `blocked` - Critical problems, cannot proceed
-
-**Invocation:** "Consult with the spec-critic agent to review [spec path] (critique mode: [mode])"
-
-**Multi-turn dialogue:**
-When critic returns `needs-work` or `blocked`:
-1. Address the concerns or prepare response
-2. Resume: "Resume agent {agent_id} and review whether the concerns have been addressed"
-3. Repeat until `approved` or max rounds reached
-4. If escalated to user after 5 rounds, present summary and request user decision
-
-**When to invoke critic (high agency mode):**
-- After completing proposal → run `intra-spec`
-- After completing spec + design → run `intra-spec` + `spec-code`
-- Before marking spec complete → run `all`
-
-**Reference:** [references/critique.md](references/critique.md) for detailed checklists
+Only pause for genuine ambiguities or when the critic can't resolve after 5 rounds.
 
 ## Iteration
 
-Spec-driven development appears sequential but **all phases can be revisited**:
+All phases can be revisited. `/refine` updates any existing artifact.
 
-- **Refine mode**: If spec files already exist, apply user's instruction to update them
-- **Phase loops**: Any phase can loop back to an earlier phase when new information surfaces
-  - Execution snag → may indicate design flaw → or spec gap → or proposal issue
-  - Design contradiction → may require spec clarification
-- **Cascade warnings**: Changes to spec may invalidate design
-- **Scope confirmation**: In interactive mode, confirm with user before scope changes. In high agency mode, document scope changes in `notes/` and proceed
+- Apply snag → may reveal a design flaw, spec gap, or proposal issue
+- Changing a spec may invalidate the design -- always warn the user
+- Scope changes require user confirmation in interactive mode; in autonomous mode, document in `notes/` and proceed
 
-## Sub-agents
+## Critique
 
-This skill delegates critique to a specialized agent:
+The **spec-critic** agent (sonnet) provides adversarial review. See [references/critique.md](references/critique.md) for checklists.
 
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| **spec-critic** | sonnet | Adversarial reviewer; challenges assumptions, validates alignment |
+| Mode | Checks |
+|------|--------|
+| `intra-spec` | Coherence within the spec |
+| `spec-code` | Alignment with the codebase |
+| `inter-spec` | Consistency across specs |
+| `all` | All three |
 
-## Templates
+**Verdicts:** `approved` | `approved-with-reservations` | `needs-work` | `blocked`
 
-All templates are in `templates/`:
-- `proposal.md` - Problem context, motivation, alternatives (directory format)
-- `delta-spec.md` - ADDED/MODIFIED/REMOVED with requirements and scenarios (directory format)
-- `reference-spec.md` - Full spec for reference/ (reference specs)
-- `design.md` - Design decisions (directory format)
-- `tasks.md` - Progress overview with task checkboxes (directory format)
-- `notes/template.md` - Starting point for note files (any phase)
-- `compact.md` - Single-file spec (compact format)
+**Invocation:** "Consult with the spec-critic agent to review [spec path] (critique mode: [mode])"
 
-## Quick Reference
+**When `needs-work` or `blocked`:** Address concerns, resume the agent, repeat. Escalate to user after 5 rounds.
 
-| Phase | Output | Key Tools |
-|-------|--------|-----------|
-| Propose | proposal.md | AskUserQuestion |
-| Specify | spec.md (delta) | AskUserQuestion |
-| Design | design.md | AskUserQuestion |
-| Plan | tasks.md | AskUserQuestion |
-| Execute | code (+ notes/ if needed) | Bash, tests |
-| Archive | updated reference/, archived change | Edit, Bash |
-| Critique | verdict + findings | spec-critic |
+## Sub-Agents
+
+| Agent | Role | Definition |
+|-------|------|------------|
+| **spec-critic** (sonnet) | Adversarial review of specs and implementation | `agents/spec-critic.md` |
+| **spec-sync** (sonnet) | Merges deltas into reference specs during archive | `agents/spec-sync.md` |

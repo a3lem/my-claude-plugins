@@ -1,41 +1,23 @@
----
-locked: false
-status: active
----
+## Why
 
-# Proposal: [Feature Name]
+<!-- 1-2 sentences on the problem or opportunity. What problem does this solve? Why now? -->
 
-## Context
-<!-- Background: status of codebase, prior work, related systems -->
+## What Changes
 
-## Problem
-<!-- What pain point or limitation exists? Who is affected? -->
+<!-- Bullet list of concrete changes. Be specific about new capabilities, modifications, or removals. Mark breaking changes with **BREAKING**. -->
 
-## Goal
-<!-- High-level objective in plain language -->
+## Capabilities
 
-## Motivation
-<!-- Why this matters. What happens if we don't do it? -->
+### New Capabilities
+<!-- Capabilities being introduced. Each creates deltas/<name>/spec.md and eventually a new reference spec. Use kebab-case. -->
 
-## Alternatives Considered
-<!-- (optional) Other approaches and why they were rejected -->
+- `capability-slug`: Brief description of what this capability covers
 
-| Alternative | Pros | Cons | Verdict |
-|-------------|------|------|---------|
-| [Option A] | ... | ... | Rejected: [reason] |
-| [Option B] | ... | ... | Rejected: [reason] |
+### Modified Capabilities
+<!-- Existing capabilities whose requirements are changing. Each must name an existing reference spec. Leave empty if none. -->
 
-## Constraints
-<!-- (optional) Technical limitations, business rules, dependencies -->
+- `capability-slug`: Brief description of what changes
 
-- [Constraint]
+## Impact
 
-## Assumptions
-<!-- (optional) Assumptions that must hold -->
-
-- [Assumption]
-
-## Out of Scope
-<!-- (optional) Explicitly excluded to prevent scope creep -->
-
-- [Excluded item]
+<!-- Affected code, APIs, dependencies, or systems -->

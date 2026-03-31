@@ -1,37 +1,24 @@
----
-locked: false
-status: active
----
+## Context
+<!-- Background, current state, constraints -->
 
-# Design: [Feature Name]
+## Goals / Non-Goals
 
-## Approach
-[High-level implementation strategy. Builds on the proposal's context and constraints.]
+**Goals:**
+<!-- What this design achieves -->
+
+**Non-Goals:**
+<!-- What this design explicitly does not address -->
 
 ## Decisions
-| Decision | Rationale |
-|----------|-----------|
-| [Choice] | [Why]     |
 
-## Risks
-[Potential issues and mitigations]
+### [Decision title]
+<!-- Description of the choice made and its rationale -->
 
-<!-- Optional sections - include when relevant -->
+**Alternatives considered:**
+<!-- Optional. Other approaches considered? Why where they rejected? -->
 
-## Architecture
-<!-- Component structure, layers -->
+## Risks / Trade-offs / Limitations
+<!-- [Risk] → Mitigation -->
 
-## Data Flow
-<!-- How data moves through the system -->
-
-## Interfaces
-<!-- API contracts, function signatures -->
-
-## Data Models
-<!-- Schemas, types, entities -->
-
-## Error Handling
-<!-- Failure modes, recovery strategies -->
-
-## Testing Strategy
-<!-- What to test, how to test -->
+## Open Questions
+<!-- Outstanding decisions or unknowns to resolve. Remove section when all resolved. -->

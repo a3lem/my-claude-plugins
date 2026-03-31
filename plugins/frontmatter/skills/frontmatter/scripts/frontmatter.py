@@ -106,7 +106,7 @@ def do_stamp(args: argparse.Namespace) -> None:
         if not cc:
             ext = filepath.suffix.lstrip(".")
             print(
-                f"Error: cannot detect comment char for .{ext} — use --comment-char",
+                f"Error: cannot detect comment char for .{ext} – use --comment-char",
                 file=sys.stderr,
             )
             sys.exit(1)

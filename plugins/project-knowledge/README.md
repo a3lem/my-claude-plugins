@@ -6,7 +6,7 @@ Routing plugin for project knowledge. Helps decide where information should live
 
 Provides a taxonomy of knowledge stores ordered by contract strength (specs > docs > decisions > notes > journal) and routing rules for "where does this go?" and "where do I look?".
 
-This plugin doesn't manage any store directly — it routes to **spec-driven-dev** (for `specs/`), **project-notes** (for `notes/`, journal, decisions), and `docs/` (no plugin needed).
+This plugin doesn't manage any store directly – it routes to **spec-driven-dev** (for `specs/`), **project-notes** (for `notes/`, journal, decisions), and `docs/` (no plugin needed).
 
 ## Quick Reference
 

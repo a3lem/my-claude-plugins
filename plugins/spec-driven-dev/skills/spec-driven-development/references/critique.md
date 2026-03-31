@@ -1,23 +1,24 @@
 # Critique Reference
 
-Detailed checklists and exploration patterns for the spec-critic agent.
+Checklists and exploration patterns for the spec-critic agent.
 
-## Intra-Spec Mode: Coherence Within the Spec
+## Intra-Spec Mode: Does the Spec Make Sense?
 
-Checks for contradictions and coherence within a single spec.
+Checks for contradictions and consistency within a single spec.
 
 ### Specification Checklist
 
 | Check | What to Look For |
 |-------|-----------------|
-| Notation correct | SHALL statements use EARS qualifiers; Given/When/Then structure consistent |
+| Notation correct | SHALL statements use EARS qualifiers; Given?/When/Then structure consistent |
 | No ambiguity | Avoid: should, could, might, usually, quickly, properly |
 | Testability | Each scenario is specific and verifiable |
 | Completeness | Happy path and error cases covered |
 | Edge cases | Boundary conditions documented |
-| Internal consistency | Scenarios don't contradict each other |
+| Internal consistency | Scenarios don't contradict each other (within and across capability files) |
 | Terminology | Same concept uses same term throughout |
-| ADDED/MODIFIED/REMOVED | Delta spec sections are accurate (for change specs) |
+| ADDED/MODIFIED/REMOVED/RENAMED | Delta spec sections are accurate (for change specs) |
+| Capability coverage | Each `deltas/*/spec.md` file corresponds to a Capabilities entry in the proposal |
 
 ### Proposal Checklist
 
@@ -27,6 +28,7 @@ Checks for contradictions and coherence within a single spec.
 | Context | Current state described accurately |
 | Scope | Out-of-scope items listed to prevent creep |
 | Constraints | Technical/business limitations documented |
+| Capabilities | New and Modified capabilities listed with slugs |
 
 ### Design Checklist
 
@@ -42,16 +44,17 @@ Checks for contradictions and coherence within a single spec.
 
 | Check | What to Look For |
 |-------|-----------------|
-| Scope alignment | proposal → spec → design → tasks.md tell consistent story |
+| Scope alignment | proposal → deltas/*/spec.md → design → tasks.md tell consistent story |
 | No drift | Design doesn't add features not in spec |
 | Tasks alignment | tasks.md (if present) covers spec scope without additions |
 | Terminology | Consistent across all files |
+| Capability mapping | Each capability in proposal maps to exactly one directory in `deltas/` |
 
 ---
 
-## Spec-Code Mode: Alignment with Codebase
+## Spec-Code Mode: Does the Spec Match the Code?
 
-Checks that spec assumptions match codebase reality.
+Checks that spec assumptions match what the codebase actually does.
 
 ### Exploration Patterns
 
@@ -109,10 +112,11 @@ Grep: pattern from design
 - Plan ignores existing implementation of same feature
 - Proposed changes conflict with CLAUDE.md rules
 - No tests planned but codebase has test coverage
+- Test files/functions do not correspond to scenario names
 
 ---
 
-## Inter-Spec Mode: Consistency Across Specs
+## Inter-Spec Mode: Do Specs Conflict with Each Other?
 
 Checks for conflicts between this spec and other active specs.
 
@@ -120,17 +124,12 @@ Checks for conflicts between this spec and other active specs.
 
 ```
 # Reference specs
-Glob: specs/reference/*.md
+Glob: specs/reference/*/spec.md
 
-# Change specs (directory format)
-Glob: specs/changes/*/spec.md
+# Change specs
+Glob: specs/changes/*/deltas/*/spec.md
 
-# Change specs (compact format)
-Glob: specs/changes/*.md
-
-# Filter by status (check frontmatter)
-# Only consider: status: active
-# Ignore: status: stale, archived, superseded
+# Skip specs in archive/ directory
 ```
 
 ### Conflict Types
@@ -147,13 +146,13 @@ Glob: specs/changes/*.md
 
 1. List all active specs
 2. For each active spec:
-   - Read its spec.md
+   - Read its `deltas/*/spec.md` files
    - Check for overlapping scope
    - If overlap: read design.md
    - Identify specific conflicts
 3. Report conflicts with references to both specs
 
-### Severity of Inter-Spec Issues
+### How Serious Are Cross-Spec Issues
 
 | Issue | Severity |
 |-------|----------|
@@ -165,7 +164,7 @@ Glob: specs/changes/*.md
 
 ## Dialogue Guidelines
 
-### Being Constructively Adversarial
+### Asking Tough Questions
 
 **Do:**
 - Cite specific locations (file:line)
